@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Örnek Güzellik Merkezi</title>
+<meta name="description" content="Cilt bakımı, buz lazer, kirpik, tırnak. 7/24 dijital asistan Ela ile 30 saniyede randevu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<!-- Meta Pixel: gerçek kurulumda salonun kendi reklam hesabındaki Pixel ID buraya yazılır.
+     Olaylar: Contact (Ela ile konuşma), Lead (cilt analizi), Schedule (randevu, tutarıyla). -->
+</head>
+<body>
+
+<div class="duyuru">İlk ziyaretinize özel <b>%15 indirim</b> + ücretsiz cilt analizi · Kod: <b>ORNEK15</b></div>
+
+<header class="nav">
+  <a class="logo" href="#"><span class="ay"></span>Örnek <i>Güzellik</i></a>
+  <nav>
+    <a href="#hizmetler">Hizmetler</a>
+    <a href="#analiz">Cilt Analizi</a>
+    <a href="#paketler">Paketler</a>
+    <a href="#ekip">Ekibimiz</a>
+    <a href="#yorumlar">Yorumlar</a>
+    <a href="seanslarim.html">Seanslarım</a>
+  </nav>
+  <div class="nav-sag">
+    <a class="panel-link" href="seanslarim.html">Seanslarım</a>
+    <a class="panel-link" href="yonetim.html">Personel</a>
+    <button class="btn koyu" data-ela="Randevu almak istiyorum">Randevu Al</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-sol">
+    <p class="ust">Cilt · Lazer · Kirpik · Tırnak</p>
+    <h1>Kendinize ayırdığınız<br>saat, <em>kusursuz</em> geçsin.</h1>
+    <p class="alt">Cilt bakımından buz lazere, ipek kirpikten nail art'a. Bekleme yok, sürpriz fiyat yok. Asistanımız Ela gece yarısı bile randevunuzu 30 saniyede ayarlar.</p>
+
+    <form class="sor" id="heroSor">
+      <span class="ela-nokta"></span>
+      <input id="heroInput" placeholder="Ela'ya sorun: “Yarın akşam kirpik için yer var mı?”" autocomplete="off">
+      <button class="btn koyu">Sor</button>
+    </form>
+    <div class="hizli">
+      <button data-ela="Cildim çok mat ve yorgun görünüyor, ne önerirsiniz?">Cildim mat görünüyor</button>
+      <button data-ela="Lazer epilasyon acıtır mı, kaç seans gerekir?">Lazer acıtır mı?</button>
+      <button data-ela="2 ay sonra düğünüm var, nereden başlamalıyım?">Düğünüm yaklaşıyor</button>
+      <button data-ela="Bu hafta kalıcı oje için boş saat var mı?">Bu hafta oje</button>
+    </div>
+    <div class="guven">
+      <div><b>4.9</b><span>★★★★★ Google · 1.240 yorum</span></div>
+      <div><b>12.000+</b><span>mutlu misafir</span></div>
+      <div><b>%100</b><span>tek kullanımlık ürün</span></div>
+    </div>
+  </div>
+
+  <div class="hero-sag" aria-hidden="true">
+    <div class="orb"><div class="orb-ic"></div></div>
+    <div class="yuzen k1">
+      <small>Ela · 23:47</small>
+      <p>Yarın 18:30 HydraFacial için Selin Hanım müsait. Ayırayım mı?</p>
+    </div>
+    <div class="yuzen k2">
+      <span class="tik">✓</span>
+      <div><b>Randevunuz onaylandı</b><small>Çarşamba 18:30 · HydraFacial</small></div>
+    </div>
+    <div class="yuzen k3"><b>WhatsApp</b><small>Yarın için hatırlatma gönderildi</small></div>
+  </div>
+</section>
+
+<section class="seritler">
+  <span>Soprano Ice Lazer</span><span>HydraFacial</span><span>Observ 520 Analiz</span><span>Steril Ekipman</span><span>Sertifikalı Uzmanlar</span><span>6 Taksit</span>
+</section>
+
+<section id="analiz" class="analiz">
+  <div class="analiz-sol">
+    <p class="ust">60 saniye · ücretsiz</p>
+    <h2>Cildiniz ne istiyor?</h2>
+    <p>Üç soruyu yanıtlayın, Ela size özel bir bakım rotası çıkarsın. Salonda Observ 520 ile yapılan ücretsiz analizde birlikte doğrularız.</p>
+  </div>
+  <div class="quiz" id="quiz"></div>
+</section>
+
+<section id="hizmetler" class="hizmetler">
+  <div class="baslik">
+    <p class="ust">Menü</p>
+    <h2>Hizmetler & fiyatlar</h2>
+    <p>Fiyatlarımız açık. Sürpriz ek ücret yok.</p>
+  </div>
+  <div class="sekmeler" id="sekmeler"></div>
+  <div class="kartlar" id="kartlar"></div>
+</section>
+
+<section id="paketler" class="paketler">
+  <div class="baslik">
+    <p class="ust">Daha az öde, daha çok parla</p>
+    <h2>Paketler & üyelik</h2>
+  </div>
+  <div class="paket-grid" id="paketGrid"></div>
+</section>
+
+<section class="neden">
+  <div><i>01</i><h3>Söz verilen saatte</h3><p>Ortalama bekleme süremiz 3 dakika. Geç kalırsak bir sonraki hizmet bizden.</p></div>
+  <div><i>02</i><h3>Hijyen, belgeli</h3><p>Tek kullanımlık başlıklar, otoklav sterilizasyon, her odada belge.</p></div>
+  <div><i>03</i><h3>Esnek iptal</h3><p>12 saat öncesine kadar ücretsiz iptal ya da erteleme, tek mesajla.</p></div>
+  <div><i>04</i><h3>Sizi hatırlıyoruz</h3><p>Cilt tipiniz, sevdiğiniz kahve, son kirpik modeliniz. Her ziyaret kaldığı yerden.</p></div>
+</section>
+
+<section id="ekip" class="ekip">
+  <div class="baslik"><p class="ust">Ellerinize emanet</p><h2>Ekibimiz</h2></div>
+  <div class="ekip-grid" id="ekipGrid"></div>
+</section>
+
+<section id="yorumlar" class="yorumlar">
+  <div class="baslik"><p class="ust">Misafirlerimiz anlatıyor</p><h2>“Bir daha başka yere gitmem.”</h2></div>
+  <div class="yorum-grid">
+    <blockquote><p>Gece 1'de Ela'ya yazdım, sabah 10'a lazer randevum hazırdı. Buz lazer gerçekten hiç acıtmadı.</p><cite>Zeynep K. · Lazer, 5. seans</cite></blockquote>
+    <blockquote><p>Selin Hanım cildime bakıp bana gereksiz hiçbir şey satmadı. HydraFacial sonrası 3 gün boyunca iltifat aldım.</p><cite>Melis A. · HydraFacial</cite></blockquote>
+    <blockquote><p>Gelin paketini aldım; takvimi onlar planladı, ben sadece geldim. Düğün fotoğraflarımda cildim pırıl pırıl.</p><cite>Büşra T. · Gelin Paketi</cite></blockquote>
+  </div>
+  <p class="demo-not">Demo içerik: yorumlar örnek amaçlıdır.</p>
+</section>
+
+<section class="cta">
+  <h2>Bu hafta kendinize bir saat ayırın.</h2>
+  <p>Ela boş saatleri şimdi gösterebilir.</p>
+  <button class="btn acik" data-ela="Bu hafta için boş saatleri göster">Boş saatleri gör</button>
+</section>
+
+<footer>
+  <div><a class="logo" href="#"><span class="ay"></span>Örnek <i>Güzellik</i></a><p>Cilt · Lazer · Kirpik · Tırnak</p></div>
+  <div><b>Adres</b><p id="fAdres"></p></div>
+  <div><b>Çalışma saatleri</b><p id="fSaat"></p></div>
+  <div><b>İletişim</b><p id="fTel"></p></div>
+</footer>
+
+<!-- Ela -->
+<button class="ela-fab" id="elaFab" aria-label="Ela ile konuş"><span class="ela-nokta"></span><span>Ela'ya sorun</span></button>
+<div class="ela-durt" id="elaDurt" hidden>
+  <button class="x" aria-label="Kapat">×</button>
+  <p><b>Merhaba, ben Ela.</b> İlk ziyaretinize %15 indirim tanımlayabilirim. 30 saniyede uygun saati bulalım mı?</p>
+  <button class="btn koyu kucuk" data-ela="İlk ziyaret indirimiyle randevu almak istiyorum">Saat bul</button>
+</div>
+<aside class="ela" id="ela" aria-hidden="true">
+  <header>
+    <div class="ela-av"><span>E</span><i></i></div>
+    <div><b>Ela</b><small>Örnek Güzellik Merkezi asistanı · genelde anında yanıtlar</small></div>
+    <button id="elaKapat" aria-label="Kapat">×</button>
+  </header>
+  <div class="ela-log" id="elaLog"></div>
+  <div class="ela-cip" id="elaCip"></div>
+  <form class="ela-form" id="elaForm">
+    <input id="elaInput" placeholder="Mesajınızı yazın…" autocomplete="off">
+    <button aria-label="Gönder">➤</button>
+  </form>
+</aside>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

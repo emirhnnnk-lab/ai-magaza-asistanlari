@@ -1,0 +1,35 @@
+{
+  "_source": "https://www.ornek-moda.com T-Soft tema CSS değişkenleri (design/css/site.css), 23.09.2026",
+  "platform": "T-Soft (tema v5, Bootstrap tabanlı)",
+  "colors": {
+    "primary": { "hex": "#190101", "use": "ana buton, marka rengi (kahveye çalan siyah)" },
+    "accent_rose": { "hex": "#8F665F", "use": "danger/vurgu – gül kurusu kahve, indirim ve ikincil vurgu" },
+    "dark": { "hex": "#2C2A28", "use": "koyu yüzeyler, footer" },
+    "body_bg": { "hex": "#F7F7F7", "use": "sayfa arka planı" },
+    "light_bg": { "hex": "#F9F9F9" },
+    "white": { "hex": "#FFFFFF" },
+    "text_body": { "hex": "#373738", "use": "gövde + başlık metni" },
+    "text_muted": { "hex": "#8C8C8C" },
+    "text_light": { "hex": "#979797" },
+    "border": { "hex": "#EAEAEA", "alt": "#E6E6E6 (en sık kullanılan)" },
+    "sale_red": { "hex": "#B20100", "use": "warning – flaş fiyat/indirim" },
+    "success": { "hex": "#43B54C" }
+  },
+  "typography": {
+    "body": { "family": "Outfit, sans-serif", "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900], "source": "Google Fonts" },
+    "display": { "family": "Playfair Display, serif", "italic": true, "weights": "400–900", "use": "başlıklar, 'Moda.' vurguları", "source": "Google Fonts" },
+    "icons": ["tsoft-icon", "mango-icon", "swiper-icons"]
+  },
+  "radius": { "default": "6px", "swatch": "circle", "thumbnails": "border-round" },
+  "components": {
+    "product_card": "görsel + 'Yeni!' rozeti + hover 'Sepete Ekle' + ad + fiyat ('2.449 TL') + 'Yeni Sezon 🔥'",
+    "discount_card": "'Sepette %30 indirim' + indirimli fiyat + 'Flaş Fiyat 🔥'",
+    "variant_selector": "renk = küçük ürün görseli thumbnail'leri; beden = S-M / L-XL butonları, stokta yoksa 'passive'",
+    "header": "üst duyuru şeridi (kargo bedava 2500₺) + logo + sekmeli arama (Ürünler/Markalar/Kombinler)"
+  },
+  "tone": "Minimal, açık gri zemin, siyaha yakın koyu kahve ana renk, Playfair serif başlıklar + Outfit sans gövde; editoryal ve sade. İndirim dili emojili ve aciliyet odaklı (🔥, 'Bitiriyoruz!').",
+  "fonts_import": [
+    "https://fonts.googleapis.com/css?family=Outfit:100,200,300,regular,500,600,700,900,800&display=swap",
+    "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+  ]
+}

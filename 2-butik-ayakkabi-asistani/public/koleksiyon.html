@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Koleksiyon — Örnek Butik</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.khead{padding:70px 0 30px}
+.khead h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,6vw,88px);line-height:1;margin-top:14px}
+.types{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+.types button{all:unset;cursor:pointer;color:var(--taupe);padding-bottom:7px;border-bottom:1px solid transparent}
+.types button.on{color:var(--espresso);border-color:var(--gold)}
+.types sup{font-size:9px;margin-left:3px;letter-spacing:0}
+.lay{display:grid;grid-template-columns:230px 1fr;gap:50px;padding-bottom:120px}
+.side{position:sticky;top:100px;align-self:start;font-size:13px}
+.side h6{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe);font-weight:400;margin:28px 0 12px}
+.side h6:first-child{margin-top:0}
+.sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.sizes button,.heels button{all:unset;cursor:pointer;text-align:center;border:1px solid var(--line);padding:9px 0;transition:.2s}
+.sizes button.on,.heels button.on{background:var(--espresso);color:var(--ivory);border-color:var(--espresso)}
+.heels{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.colors{display:flex;flex-wrap:wrap;gap:9px}
+.colors button{all:unset;cursor:pointer;width:24px;height:24px;border-radius:50%;border:1px solid rgba(42,33,27,.2);outline-offset:3px}
+.colors button.on{outline:1px solid var(--espresso)}
+.side .hint{font-size:12px;color:var(--taupe);line-height:1.6;margin-top:10px}
+.side .clear{all:unset;cursor:pointer;margin-top:26px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:4px}
+.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;font-size:12px;color:var(--taupe);gap:10px;flex-wrap:wrap}
+.bar select{font:inherit;background:none;border:0;border-bottom:1px solid var(--line);padding:6px 2px;color:var(--espresso)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:46px 22px}
+.none{grid-column:1/-1;padding:60px 0;font-family:var(--serif);font-size:26px;font-style:italic;color:var(--taupe)}
+.none a{font-style:normal;font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid var(--gold);margin-left:10px}
+.sz-note{font-size:11px;color:var(--gold);margin-top:6px}
+.fbtn{display:none}
+@media (max-width:900px){
+  .lay{grid-template-columns:1fr}
+  .side{position:static;display:none}.side.open{display:block}
+  .fbtn{display:inline-block;all:unset;cursor:pointer;font-size:11px;letter-spacing:.22em;text-transform:uppercase;border:1px solid var(--espresso);padding:9px 14px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:32px 12px}
+  .types{gap:14px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
+  .types button{white-space:nowrap}
+}
+</style>
+</head>
+<body data-page="koleksiyon">
+<div class="wrap khead">
+  <div class="eyebrow">Koleksiyon</div>
+  <h1 id="title">Tüm <em>modeller</em></h1>
+  <div class="types" id="types"></div>
+</div>
+<div class="wrap lay">
+  <aside class="side" id="side">
+    <h6>Numaranız</h6>
+    <div class="sizes" id="sizes"></div>
+    <div class="hint">Numara seçince yalnızca o numarası stokta olan modeller kalır. Kalıbı küçük modellerde bir büyüğüne bakılır.</div>
+    <h6>Topuk</h6>
+    <div class="heels" id="heels"></div>
+    <h6>Renk</h6>
+    <div class="colors" id="colors"></div>
+    <h6>Özellik</h6>
+    <label style="display:flex;gap:10px;align-items:center;cursor:pointer"><input type="checkbox" id="warm"> Sıcak astarlı / kışlık</label>
+    <button class="clear" id="clear">Filtreleri temizle</button>
+  </aside>
+  <main>
+    <div class="bar"><span id="count"></span><button class="fbtn" onclick="document.getElementById('side').classList.toggle('open')">Filtrele</button>
+      <select id="sort"><option value="">Önerilen</option><option value="asc">Fiyat: artan</option><option value="desc">Fiyat: azalan</option><option value="heel">Topuk: alçaktan</option></select></div>
+    <div class="grid" id="grid"></div>
+  </main>
+</div>
+<script src="/assets/site.js"></script>
+<script src="/assets/asistan.js"></script>
+<script>
+(async () => {
+  const all = await fetch('/api/catalog').then(r => r.json());
+  const TYPES = [['', 'Tümü'], ['yeni', 'Yeni Sezon'], ['bot', 'Bot'], ['cizme', 'Çizme'], ['stiletto', 'Stiletto'], ['topuklu', 'Topuklu'], ['makosen', 'Makosen'], ['babet', 'Babet'], ['spor', 'Spor'], ['sandalet', 'Sandalet'], ['terlik', 'Terlik']];
+  const SW = { siyah:'#16110d', kahve:'#5a3a26', taba:'#9a5b2e', camel:'#b48a5a', bej:'#d8c3a2', ekru:'#efe6d4', ten:'#d9b394', vizon:'#8f7c6b', bordo:'#6d1f2b', 'kırmızı':'#a5262c', beyaz:'#fff', lacivert:'#1f2a44', haki:'#6b6a43', 'tütün':'#6b4a2b', kum:'#cbb89a', pudra:'#e7c3bd', lame:'linear-gradient(135deg,#ddd,#999,#eee)', dore:'linear-gradient(135deg,#e6c77a,#a8823a,#f3dc9a)' };
+  const HEELS = [['duz','Düz · 0–2', p => (p.heel_cm ?? 0) <= 2], ['alcak','Alçak · 3–5', p => p.heel_cm > 2 && p.heel_cm <= 5], ['orta','Orta · 5–7', p => p.heel_cm > 5 && p.heel_cm <= 7], ['yuksek','Yüksek · 7+', p => p.heel_cm > 7]];
+  const q = new URLSearchParams(location.search);
+  const st = { tur: q.get('tur') || '', renk: q.get('renk') || '', size: +(Site.store.get('ece_size', 0)) || 0, heel: '', warm: false, sort: '' };
+  const fitSize = (p, n) => p.fit === 'bir numara büyük' ? n + 1 : n;
+  const okSize = (p, n) => !n || p.sizes.some(s => +s.size === fitSize(p, n) && s.stock > 0);
+  const byTur = (p, t) => !t || (t === 'yeni' ? p.yeni : t === 'topuklu' ? ['topuklu', 'stiletto'].includes(p.type) : p.type === t);
+
+  const $ = id => document.getElementById(id);
+  function chrome() {
+    $('types').innerHTML = TYPES.map(([k, n]) => `<button data-t="${k}" class="${st.tur === k ? 'on' : ''}">${n}<sup>${all.filter(p => byTur(p, k)).length}</sup></button>`).join('');
+    $('sizes').innerHTML = [35, 36, 37, 38, 39, 40, 41].map(n => `<button data-s="${n}" class="${st.size === n ? 'on' : ''}">${n}</button>`).join('');
+    $('heels').innerHTML = HEELS.map(([k, n]) => `<button data-h="${k}" class="${st.heel === k ? 'on' : ''}">${n}</button>`).join('');
+    const cols = [...new Set(all.filter(p => byTur(p, st.tur)).map(p => p.color).filter(Boolean))];
+    $('colors').innerHTML = cols.map(c => `<button title="${c}" data-c="${c}" class="${st.renk === c ? 'on' : ''}" style="background:${SW[c] || '#ccc'}"></button>`).join('');
+    const t = TYPES.find(x => x[0] === st.tur);
+    $('title').innerHTML = st.tur ? `${t[1]}` + (st.renk ? ` <em>${st.renk}</em>` : '') : `Tüm <em>modeller</em>`;
+    $('warm').checked = st.warm; $('sort').value = st.sort;
+  }
+  function render() {
+    chrome();
+    let list = all.filter(p => byTur(p, st.tur) && (!st.renk || p.color === st.renk) && okSize(p, st.size) && (!st.heel || HEELS.find(h => h[0] === st.heel)[2](p)) && (!st.warm || p.warm));
+    if (st.sort === 'asc') list.sort((a, b) => a.price - b.price);
+    if (st.sort === 'desc') list.sort((a, b) => b.price - a.price);
+    if (st.sort === 'heel') list.sort((a, b) => (a.heel_cm ?? 0) - (b.heel_cm ?? 0));
+    $('count').textContent = `${list.length} model` + (st.size ? ` · ${st.size} numarası stokta` : '');
+    $('grid').innerHTML = list.length ? list.map((p, i) => Site.cardHTML(p, { tag: p.yeni ? 'Yeni' : '', eager: i < 9 })).join('') : `<div class="none">Bu seçimle stokta model kalmadı.<a href="#" data-ela="${st.size ? st.size + ' numara ' : ''}${st.tur ? TYPES.find(x => x[0] === st.tur)[1].toLowerCase() : 'ayakkabı'} arıyorum, ${st.renk || ''} benzeri ne var?">Ela'ya sorun →</a></div>`;
+    if (st.size) $('grid').querySelectorAll('.pcard').forEach(a => { const p = all.find(x => x.slug === a.dataset.slug); if (p.fit === 'bir numara büyük') a.insertAdjacentHTML('beforeend', `<div class="sz-note">Kalıbı küçük · ${st.size + 1} numara önerilir</div>`); });
+    const u = new URLSearchParams(); if (st.tur) u.set('tur', st.tur); if (st.renk) u.set('renk', st.renk); history.replaceState(null, '', '/koleksiyon' + (u.toString() ? '?' + u : ''));
+  }
+  document.body.addEventListener('click', e => {
+    const t = e.target.closest('[data-t]'); if (t) { st.tur = t.dataset.t; st.renk = ''; render(); }
+    const s = e.target.closest('[data-s]'); if (s) { st.size = st.size === +s.dataset.s ? 0 : +s.dataset.s; Site.store.set('ece_size', st.size || null); render(); }
+    const h = e.target.closest('[data-h]'); if (h) { st.heel = st.heel === h.dataset.h ? '' : h.dataset.h; render(); }
+    const c = e.target.closest('[data-c]'); if (c) { st.renk = st.renk === c.dataset.c ? '' : c.dataset.c; render(); }
+  });
+  $('warm').onchange = e => { st.warm = e.target.checked; render(); };
+  $('sort').onchange = e => { st.sort = e.target.value; render(); };
+  $('clear').onclick = () => { Object.assign(st, { renk: '', size: 0, heel: '', warm: false }); Site.store.set('ece_size', null); render(); };
+  render();
+})();
+</script>
+</body>
+</html>

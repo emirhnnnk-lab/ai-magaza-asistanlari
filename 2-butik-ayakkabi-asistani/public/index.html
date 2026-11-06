@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Örnek Butik — Maison de Chaussures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+/* I · açılış */
+.hero{position:relative;min-height:calc(100vh - 116px);display:grid;grid-template-columns:1fr 1.15fr;align-items:center;overflow:hidden;background:radial-gradient(ellipse at 70% 50%,#fbf8f3 0%,var(--cream) 55%,var(--sand) 130%);padding:0}
+.hero-copy{padding:60px clamp(16px,5vw,80px);position:relative;z-index:2}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(48px,7.2vw,112px);line-height:.92;letter-spacing:-.01em;margin:22px 0 28px}
+.hero h1 em{font-style:italic}
+.hero p{max-width:410px;line-height:1.8;font-size:15px;color:var(--muted)}
+.hero .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:38px}
+#hero3d{position:relative;height:100%;min-height:560px}
+#hero3d canvas{position:absolute;inset:0}
+.hero-ring{position:absolute;left:50%;top:50%;width:min(62vh,560px);aspect-ratio:1;border:1px solid rgba(176,141,87,.35);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.drag-hint{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);z-index:2}
+.loader{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-style:italic;color:var(--taupe);font-size:18px;transition:opacity .6s;pointer-events:none}
+.scroll-cue{position:absolute;left:clamp(16px,5vw,80px);bottom:30px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);display:flex;align-items:center;gap:12px;z-index:2}
+.scroll-cue::before{content:"";width:1px;height:40px;background:linear-gradient(var(--gold),transparent);animation:cue 2s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* II · gardırobun temeli */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.cat{position:relative;overflow:hidden;background:#efe8de;display:block}
+.cat .ph{aspect-ratio:3/3.9;overflow:hidden}
+.cat img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.cat:hover img{transform:scale(1.07)}
+.cat .lb{display:flex;justify-content:space-between;align-items:baseline;padding:18px 4px 0;background:var(--ivory)}
+.cat b{font-family:var(--serif);font-weight:400;font-size:30px}
+.cat small{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe)}
+
+/* III · Simply Elegant — tam ekran, kaydırdıkça açılan görsel */
+.elegant{height:220vh;position:relative;padding:0}
+.elegant .stick{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center}
+.elegant .frame{position:absolute;inset:0;clip-path:inset(var(--ci,22%) var(--cx,30%) round 0);will-change:clip-path}
+.elegant .frame img{width:100%;height:100%;object-fit:cover;object-position:100% 50%;transform:scale(var(--sc,1.3));transform-origin:100% 50%}
+.elegant .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,17,13,.05) 40%,rgba(22,17,13,.55))}
+.elegant .words{position:relative;z-index:2;text-align:center;color:var(--ivory);opacity:var(--wo,0);transform:translateY(calc((1 - var(--wo,0)) * 40px))}
+.elegant .words h2{font-family:var(--serif);font-weight:300;font-size:clamp(54px,9vw,150px);line-height:.9}
+.elegant .words h2 em{color:var(--gold-soft)}
+.elegant .words p{margin-top:22px;font-size:13px;letter-spacing:.3em;text-transform:uppercase}
+.elegant .pre{position:absolute;top:13%;z-index:1;font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.4vw,32px);color:var(--taupe);opacity:calc(1 - var(--wo,0) * 2)}
+
+/* IV · Western Mood — sabit görsel, akan hikâye */
+.western{background:var(--cream)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,100px)}
+.split .pin{position:sticky;top:110px;align-self:start;aspect-ratio:950/840;overflow:hidden;background:#fff}
+.split .pin img{width:100%;height:100%;object-fit:cover;transform:scale(var(--wz,1.08));transition:transform .2s linear}
+.notes{padding:10vh 0}
+.note{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.25;transition:opacity .6s}
+.note.on{opacity:1}
+.note .n{font-family:var(--serif);font-size:16px;color:var(--gold);letter-spacing:.2em}
+.note h3{font-family:var(--serif);font-weight:300;font-size:clamp(40px,4.6vw,72px);line-height:1;margin:14px 0 20px}
+.note p{max-width:430px;line-height:1.9;color:var(--muted)}
+.note .link{align-self:flex-start;margin-top:26px}
+
+/* V · City — yatay galeri */
+.city{height:var(--h,420vh);position:relative;padding:0;background:var(--ink);color:var(--ivory)}
+.city .stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.city .head{position:absolute;top:clamp(90px,12vh,130px);left:clamp(16px,4vw,56px);right:clamp(16px,4vw,56px);display:flex;justify-content:space-between;align-items:end;z-index:2}
+.city .head h2{font-family:var(--serif);font-weight:300;font-size:clamp(40px,5vw,72px);line-height:1}
+.city .head .eyebrow{color:var(--gold-soft)}
+.city .prog{width:180px;height:1px;background:rgba(246,241,234,.2);position:relative}
+.city .prog i{position:absolute;left:0;top:0;height:1px;background:var(--gold);width:calc(var(--p,0) * 100%)}
+.track{display:flex;gap:clamp(18px,3vw,40px);padding:0 clamp(16px,4vw,56px);margin-top:clamp(80px,12vh,120px);will-change:transform}
+.panel{flex:0 0 auto;height:58vh;position:relative;display:block}
+.panel img{height:100%;width:auto;object-fit:cover;filter:saturate(.9);transition:filter .6s}
+.panel:hover img{filter:saturate(1.1)}
+.panel .cap{position:absolute;left:0;bottom:-58px;display:flex;gap:16px;align-items:baseline}
+.panel .cap b{font-family:var(--serif);font-weight:300;font-size:30px}
+.panel .cap span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-soft)}
+.panel.end{display:flex;flex-direction:column;justify-content:center;width:min(420px,80vw);padding-left:20px}
+.panel.end h3{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4vw,56px);line-height:1;margin-bottom:26px}
+.panel.end .cta{background:var(--ivory);color:var(--ink);align-self:flex-start}
+.panel.end .cta:hover{background:var(--gold)}
+
+/* VI · 3D salon */
+.salon{background:var(--ink);color:var(--ivory);padding-top:40px}
+.salon .eyebrow{color:var(--gold-soft)}
+.salon .sec-head p{color:#b9ab99}
+.stage{display:grid;grid-template-columns:260px 1fr 300px;gap:30px;align-items:stretch}
+.pick{list-style:none;border-top:1px solid rgba(246,241,234,.12)}
+.pick li{border-bottom:1px solid rgba(246,241,234,.12)}
+.pick button{all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;width:100%;padding:17px 4px;font-family:var(--serif);font-size:22px;color:#a39684;transition:color .3s,padding .3s}
+.pick button small{font-family:var(--sans);font-size:10px;letter-spacing:.2em;color:#6f6455}
+.pick button:hover,.pick button.on{color:var(--ivory);padding-left:12px}
+.pick button.on small{color:var(--gold)}
+#salon3d{position:relative;min-height:560px;background:radial-gradient(circle at 50% 60%,#3a2f26 0%,#1b1511 65%);border:1px solid rgba(207,177,132,.18)}
+#salon3d canvas{position:absolute;inset:0}
+.tools{position:absolute;left:16px;right:16px;bottom:16px;display:flex;gap:8px;flex-wrap:wrap;z-index:2}
+.tools button{all:unset;cursor:pointer;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:9px 14px;border:1px solid rgba(246,241,234,.25);color:#d9cdbd;transition:.3s}
+.tools button:hover,.tools button.on{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.detail{display:flex;flex-direction:column;justify-content:space-between}
+.detail h3{font-family:var(--serif);font-weight:300;font-size:46px;line-height:1;margin:14px 0 18px}
+.detail p{color:#b9ab99;line-height:1.8;font-size:14px}
+.detail .count{font-family:var(--serif);font-size:56px;line-height:1;margin-top:30px;color:var(--gold-soft)}
+.detail .count small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8f8272;margin-top:8px}
+.detail .cta{background:var(--ivory);color:var(--ink);margin-top:14px;width:100%}
+.detail .cta:hover{background:var(--gold)}
+.detail .cta.ghost{background:transparent;color:var(--ivory);border-color:rgba(246,241,234,.4)}
+.detail .cta.ghost:hover{background:var(--ivory);color:var(--ink)}
+.salon .disc{margin-top:16px;font-size:11px;color:#6f6455;letter-spacing:.06em}
+
+/* VII · Ela — final */
+.finale{position:relative;background:radial-gradient(ellipse at 50% 0%,#fbf8f3 0%,var(--cream) 60%,var(--sand) 140%);text-align:center;overflow:hidden}
+.finale h2{font-family:var(--serif);font-weight:300;font-size:clamp(46px,7vw,110px);line-height:.95;margin:20px 0 26px}
+.finale p.lead{max-width:560px;margin:0 auto;line-height:1.9;color:var(--muted)}
+.demo{max-width:760px;margin:56px auto 0;text-align:left;background:var(--ivory);border:1px solid rgba(176,141,87,.3);box-shadow:0 40px 80px -40px rgba(42,33,27,.35)}
+.demo .bar{display:flex;justify-content:space-between;padding:16px 22px;background:var(--ink);color:var(--ivory);font-family:var(--serif);font-size:22px}
+.demo .bar small{font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);align-self:center}
+.demo .lines{padding:26px 26px 10px;min-height:250px;display:flex;flex-direction:column;gap:14px;font-size:15px;line-height:1.6}
+.demo .me{align-self:flex-end;background:var(--espresso);color:var(--ivory);padding:10px 16px;max-width:80%}
+.demo .bot{max-width:85%}
+.demo .btn{display:inline-block;border:1px solid var(--espresso);padding:6px 12px;font-size:13px;margin:8px 6px 0 0}
+.demo .btn.on{background:var(--espresso);color:var(--ivory)}
+.demo .lines>*{opacity:0;transform:translateY(10px);transition:.6s}
+.demo .lines>.show{opacity:1;transform:none}
+.asks{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:40px auto 0;max-width:760px}
+.asks button{all:unset;cursor:pointer;border:1px solid var(--espresso);padding:12px 18px;font-size:14px;transition:.3s}
+.asks button:hover{background:var(--espresso);color:var(--ivory)}
+.facts{display:flex;justify-content:center;gap:clamp(24px,6vw,80px);margin-top:70px;flex-wrap:wrap}
+.facts div{text-align:center}
+.facts b{display:block;font-family:var(--serif);font-weight:300;font-size:52px;line-height:1}
+.facts span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe)}
+
+@media (max-width:1100px){
+  .stage{grid-template-columns:1fr}
+  .pick{display:flex;overflow-x:auto;border:0;gap:6px}
+  .pick li{border:0;flex:0 0 auto}
+  .pick button{padding:10px 14px;border:1px solid rgba(246,241,234,.15);font-size:17px}
+  .pick button small{display:none}
+  #salon3d{min-height:440px}
+  .cats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-copy{padding:44px 16px 0;text-align:center}
+  .hero p{margin:0 auto}.hero .btns{justify-content:center}
+  #hero3d{min-height:420px}
+  .scroll-cue{display:none}
+  .split{grid-template-columns:1fr}
+  .split .pin{position:relative;top:0}
+  .note{min-height:auto;padding:40px 0;opacity:1}
+  .notes{padding:0}
+  .panel{height:46vh}
+  .city .head{flex-direction:column;align-items:start;gap:16px}
+  .demo .lines{padding:20px 16px 6px}
+}
+@media (prefers-reduced-motion:reduce){.elegant{height:auto}.elegant .stick{position:relative}.elegant .frame{clip-path:none}.elegant .words{opacity:1;transform:none}.elegant .pre{display:none}}
+
+/* 0 · açılış perdesi */
+#intro{position:fixed;inset:0;z-index:200;pointer-events:auto;cursor:pointer}
+#intro .half{position:absolute;left:0;right:0;height:50.5%;background:var(--ink);transition:transform 1.2s cubic-bezier(.77,0,.18,1)}
+#intro .half.t{top:0}#intro .half.b{bottom:0}
+#intro .mark{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ivory);transition:opacity .5s,transform 1.2s cubic-bezier(.77,0,.18,1)}
+#intro .mono{font-family:var(--serif);font-style:italic;font-weight:300;font-size:22px;color:var(--gold-soft);opacity:0;animation:inFade .9s .1s forwards}
+#intro h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7vw,96px);letter-spacing:.04em;margin:14px 0 18px;display:flex;overflow:hidden;padding-bottom:.1em}
+#intro h1 span{display:inline-block;transform:translateY(110%);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards;white-space:pre}
+#intro .rule{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:rule 1.4s .5s cubic-bezier(.6,0,.2,1) forwards}
+#intro small{margin-top:18px;font-size:10px;letter-spacing:1.1em;text-transform:uppercase;color:var(--gold-soft);opacity:0;animation:track 1.6s 1s cubic-bezier(.2,.8,.2,1) forwards}
+#intro .count{position:absolute;bottom:34px;right:clamp(16px,4vw,56px);font-family:var(--serif);font-size:14px;color:#8f8272;letter-spacing:.2em}
+#intro .skip{position:absolute;bottom:34px;left:clamp(16px,4vw,56px);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#6f6455}
+#intro.out .half.t{transform:translateY(-101%)}
+#intro.out .half.b{transform:translateY(101%)}
+#intro.out .mark{opacity:0;transform:scale(.96)}
+#intro.out .count,#intro.out .skip{opacity:0}
+#intro.gone{display:none}
+@keyframes rise{to{transform:none}}
+@keyframes rule{to{width:min(340px,60vw)}}
+@keyframes inFade{to{opacity:1}}
+@keyframes track{from{letter-spacing:1.1em;opacity:0}to{letter-spacing:.5em;opacity:1}}
+/* perde açılınca açılış metni sırayla gelir */
+body.intro-wait .hero-copy>*{opacity:0;transform:translateY(24px)}
+.hero-copy>*{transition:opacity 1s,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.hero-copy>*:nth-child(2){transition-delay:.12s}.hero-copy>*:nth-child(3){transition-delay:.24s}.hero-copy>*:nth-child(4){transition-delay:.36s}
+body.intro-wait .hero-ring{transform:translate(-50%,-50%) scale(.6);opacity:0}
+.hero-ring{transition:transform 1.6s cubic-bezier(.2,.8,.2,1) .2s,opacity 1.2s .2s}
+@media (prefers-reduced-motion:reduce){#intro{display:none}body.intro-wait .hero-copy>*,body.intro-wait .hero-ring{opacity:1;transform:none}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+</script>
+</head>
+<body data-page="home" class="intro-wait">
+<div id="intro" aria-hidden="true">
+  <div class="half t"></div><div class="half b"></div>
+  <div class="mark">
+    <div class="mono">Nişantaşı</div>
+    <h1 id="introName"></h1>
+    <div class="rule"></div>
+    <small>Maison de chaussures</small>
+  </div>
+  <div class="skip">Geçmek için dokunun</div>
+  <div class="count" id="introCount">00</div>
+</div>
+<script>
+// açılış: oturumda bir kez; en az 2,6 sn, 3D model hazır olunca (en geç 5 sn) perde açılır
+(() => {
+  const el = document.getElementById('intro');
+  let seen = false; try { seen = sessionStorage.getItem('ece_intro') === '1'; } catch {}
+  const done = () => { if (el.classList.contains('out')) return; el.classList.add('out'); document.body.classList.remove('intro-wait'); window.dispatchEvent(new Event('intro:done')); try { sessionStorage.setItem('ece_intro', '1'); } catch {} setTimeout(() => el.classList.add('gone'), 1300); };
+  if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.add('gone'); document.body.classList.remove('intro-wait'); window.__introDone = true; return; }
+  document.getElementById('introName').innerHTML = [..."Örnek Butik"].map((c, i) => `<span style="animation-delay:${.25 + i * .045}s">${c}</span>`).join('');
+  const t0 = performance.now(), cnt = document.getElementById('introCount');
+  let ready = false; window.addEventListener('hero:ready', () => ready = true);
+  (function tick() {
+    const t = performance.now() - t0, k = Math.min(1, t / 2600);
+    cnt.textContent = String(Math.round((ready ? k : Math.min(k, .9)) * 100)).padStart(2, '0');
+    if ((t > 2600 && ready) || t > 5000) return setTimeout(done, 250);
+    requestAnimationFrame(tick);
+  })();
+  el.addEventListener('click', done);
+})();
+</script>
+
+<!-- I -->
+<section class="hero">
+  <div class="hero-copy reveal">
+    <div class="eyebrow">Sonbahar · Kış 2026</div>
+    <h1>Her adım,<br><em>bir imza.</em></h1>
+    <p>Türkiye'de üretilen, çoğu hakiki deriden kadın ayakkabıları. Zamansız çizgiler, sessiz bir lüks.</p>
+    <div class="btns"><a href="/koleksiyon" class="cta">Koleksiyonu keşfet →</a><a href="#" class="cta ghost" data-ela>Ela'ya sorun</a></div>
+  </div>
+  <div id="hero3d">
+    <div class="hero-ring"></div>
+    <div class="loader" id="heroLoad">yükleniyor…</div>
+    <div class="drag-hint">Döndürmek için sürükleyin</div>
+  </div>
+  <div class="scroll-cue">Kaydırın</div>
+</section>
+
+<!-- II -->
+<section id="koleksiyon">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">Koleksiyonlar</div><h2>Gardırobun <em>temeli</em></h2></div>
+      <p>Bottan stilettoya, her silüet aynı titizlikle: seçilmiş deri, doğru kalıp, ömürlük dikiş.</p>
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+</section>
+
+<!-- III -->
+<section class="elegant" id="elegant">
+  <div class="stick">
+    <div class="pre">Bazen tek bir parça yeter.</div>
+    <div class="frame"><img src="/img/yeni-sezon-c64f.jpg" alt="Kahverengi stiletto ve jean"></div>
+    <div class="words"><h2>Simply <em>Elegant</em></h2><p>İnce topuk · Sivri burun · Süet</p></div>
+  </div>
+</section>
+
+<!-- IV -->
+<section class="western" id="western">
+  <div class="wrap split">
+    <div class="pin"><img src="/img/orj-111b5cc2-a24e-4717-8936-3332b768000b.jpg" alt="Western Mood — işlemeli kahve bot"></div>
+    <div class="notes">
+      <div class="note"><span class="n">01</span><h3>İşlemeli <em>deri</em></h3><p>Western ruhu, sezonun en özgür hali. İşlemeli deri, sivri burun ve alçak kalın topukla; jean'in yanında en doğal halinde.</p></div>
+      <div class="note"><span class="n">02</span><h3>Gün boyu <em>ayakta</em></h3><p>Kalın topuk ağırlığı dağıtır, sivri burun siluet çizer. Ofisten akşama değiştirmeden.</p></div>
+      <div class="note"><span class="n">03</span><h3>Kahvenin <em>tonları</em></h3><p>Kahve, taba, tütün, camel. Sezonun rengi, botlarda ve çizmelerde en sıcak halinde.</p><a class="link" href="/koleksiyon?tur=bot&renk=kahve">Kahve botları gör →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- V -->
+<section class="city" id="city">
+  <div class="stick">
+    <div class="head"><div><div class="eyebrow">Lookbook</div><h2>Şehrin <em>zarif</em> tarafı</h2></div><div class="prog"><i></i></div></div>
+    <div class="track" id="track">
+      <a class="panel" href="/koleksiyon?tur=cizme"><img src="/img/cizme-c43ef5fd-c.jpg" alt=""><div class="cap"><b>Çizme</b><span data-n="cizme"></span></div></a>
+      <a class="panel" href="/koleksiyon?tur=bot"><img src="/img/bot-1d78dd79-1.jpg" alt=""><div class="cap"><b>Kısa bot</b><span data-n="bot"></span></div></a>
+      <a class="panel" href="/koleksiyon?tur=makosen"><img src="/img/orj-af4c3b61-baa6-4a29-8d5f-455db376986e.jpg" alt=""><div class="cap"><b>Makosen</b><span data-n="makosen"></span></div></a>
+      <a class="panel" href="/koleksiyon?tur=babet"><img src="/img/thumb-9ecb0222-4390-4261-a6f5-13806ee4a5cb.jpg" alt=""><div class="cap"><b>Babet</b><span data-n="babet"></span></div></a>
+      <a class="panel" href="/koleksiyon?tur=spor"><img src="/img/spor-ayakkabi-3d9c.jpg" alt=""><div class="cap"><b>Spor</b><span data-n="spor"></span></div></a>
+      <a class="panel" href="/koleksiyon?tur=yeni"><img src="/img/thumb-6caad57a-d66b-428c-bf55-57560feb334c.jpg" alt=""><div class="cap"><b>Yeni sezon</b><span>Sonbahar · Kış</span></div></a>
+      <div class="panel end"><h3>Ve şimdi,<br><em>yakından</em> bakın.</h3><a href="#salon" class="cta">3D Salona geç ↓</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- VI -->
+<section id="salon" class="salon">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">3D Salon</div><h2>Dokunmadan <em>hissedin</em></h2></div>
+      <p>Silüetleri 360° döndürün, yakınlaşın, topuğun açısına bakın. Vitrin artık ekranınızda.</p>
+    </div>
+    <div class="stage">
+      <ul class="pick" id="pick"></ul>
+      <div id="salon3d">
+        <div class="loader" id="salonLoad">yükleniyor…</div>
+        <div class="tools"><button id="tSpin" class="on">Otomatik dön</button><button data-v="side">Yan</button><button data-v="front">Ön</button><button data-v="top">Üst</button></div>
+      </div>
+      <div class="detail">
+        <div><div class="eyebrow" id="dTag">—</div><h3 id="dName">—</h3><p id="dDesc"></p>
+          <div class="count" id="dCount">—<small>model koleksiyonda</small></div></div>
+        <div><a href="/koleksiyon" class="cta" id="dGo">Koleksiyonda gör</a><a href="#" class="cta ghost" id="dAsk" data-ela>Ela'ya sor</a>
+          <div class="disc">3D önizlemeler silüeti göstermek içindir; ürün fotoğrafları koleksiyonda.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VII -->
+<section class="finale" id="ela-tanisin">
+  <div class="wrap">
+    <div class="eyebrow reveal">Kişisel stil danışmanınız</div>
+    <h2 class="reveal">Ela ile <em>tanışın.</em></h2>
+    <p class="lead reveal">Numaranızı, topuk tercihinizi ve gideceğiniz yeri söyleyin; stokta olan doğru modeli, doğru numarayla getirsin. Kalıbı küçük modelde bir büyüğünü kendisi seçer, numaranız kalmadıysa aynı modelin o numarası olan rengini gösterir.</p>
+    <div class="demo reveal" id="demo">
+      <div class="bar">Ela <small>canlı · stoktan</small></div>
+      <div class="lines" id="demoLines"></div>
+    </div>
+    <div class="asks reveal">
+      <button data-ela="Düğün için çok yüksek olmayan, ince topuklu bir şey">Düğün için, çok yüksek olmasın</button>
+      <button data-ela="38 numara kışlık siyah bot">38 numara kışlık siyah bot</button>
+      <button data-ela="Gün boyu ayaktayım, rahat bir şey arıyorum">Gün boyu ayaktayım</button>
+      <button data-ela="3.000 TL altı makosen">3.000 TL altı makosen</button>
+    </div>
+    <div class="facts reveal" id="facts"></div>
+  </div>
+</section>
+
+<script src="/assets/site.js"></script>
+<script src="/assets/asistan.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+
+const catalog = await fetch('/api/catalog').then(r => r.json());
+const byType = t => catalog.filter(p => p.type === t || (t === 'topuklu' && p.type === 'stiletto'));
+
+/* II · kategori kartları: gerçek ürün fotoğrafları, sayılar katalogdan */
+const CATS = [['bot','Bot'],['cizme','Çizme'],['stiletto','Stiletto'],['makosen','Makosen']];
+document.getElementById('cats').innerHTML = CATS.map(([t,n]) => { const p = byType(t)[0]; return `<a class="cat reveal" href="/koleksiyon?tur=${t}"><div class="ph"><img src="${p?.img2 || p?.img}" alt="${n}" loading="lazy"></div><div class="lb"><b>${n}</b><small>${byType(t).length} model</small></div></a>`; }).join('');
+Site.reveal();
+document.querySelectorAll('[data-n]').forEach(s => s.textContent = byType(s.dataset.n).length + ' model →');
+
+/* III · Simply Elegant: kaydırdıkça çerçeve açılır */
+const eleg = document.getElementById('elegant');
+/* IV · Western: notlar sırayla yanar */
+const notes = [...document.querySelectorAll('.note')];
+const pinImg = document.querySelector('.split .pin');
+/* V · City: dikey kaydırma → yatay galeri */
+const city = document.getElementById('city'), track = document.getElementById('track');
+const span = () => { const l = track.lastElementChild; return Math.max(0, l.offsetLeft + l.offsetWidth + 56 - innerWidth); };
+const sizeCity = () => { const extra = span(); city.style.setProperty('--h', `${innerHeight + extra}px`); };
+addEventListener('load', sizeCity); addEventListener('resize', sizeCity); track.querySelectorAll('img').forEach(i => i.addEventListener('load', sizeCity));
+const clamp = (x,a=0,b=1) => Math.max(a, Math.min(b, x));
+function onScroll(){
+  const vh = innerHeight;
+  // III
+  const r = eleg.getBoundingClientRect(); const k = clamp(-r.top / (r.height - vh));
+  eleg.style.setProperty('--ci', `${(1-k)*22}%`); eleg.style.setProperty('--cx', `${(1-k)*30}%`); eleg.style.setProperty('--sc', 1.3 - k*.16); eleg.style.setProperty('--wo', clamp((k-.45)*2.2));
+  // IV
+  const mid = vh * .5; notes.forEach(n => { const b = n.getBoundingClientRect(); n.classList.toggle('on', b.top < mid + 120 && b.bottom > mid - 120); });
+  const w = document.getElementById('western').getBoundingClientRect(); pinImg.style.setProperty('--wz', 1.08 - clamp(-w.top / w.height) * .08);
+  // V
+  const c = city.getBoundingClientRect(); const p = clamp(-c.top / (c.height - vh));
+  track.style.transform = `translateX(${-p * span()}px)`; city.style.setProperty('--p', p);
+}
+addEventListener('scroll', () => requestAnimationFrame(onScroll), {passive:true}); onScroll();
+
+/* VI · 3D */
+const MODELS = [
+  {f:'kate_stiletto_heel_pumps_updated', n:'Stiletto', t:'stiletto', tag:'Sivri burun · ince topuk', d:'Akşam davetlerinin ve düğünlerin sessiz yıldızı. Rugan ya da deri, her zaman keskin.', ask:'Davet için stiletto bakıyorum'},
+  {f:'courtney_stiletto_high_heel_sandals_v2', n:'Sandalet', t:'sandalet', tag:'İnce bant · topuklu', d:'Yazın akşamları için; ayak bileğini zarifçe saran ince bantlar.', ask:'Topuklu sandalet var mı?'},
+  {f:'kelile_knee_high_stiletto_boots', n:'Çizme', t:'cizme', tag:'Diz boyu', d:'Kışın en iddialı hali. Baldır çapı modelden modele değişir; Ela ölçüsüne bakar.', ask:'Baldırım geniş, bana uygun çizme var mı?'},
+  {f:'leather_womens_shoes', n:'Topuklu', t:'topuklu', tag:'Klasik · orta topuk', d:'Ofisten akşam yemeğine; gün boyu taşınabilir bir yükseklik.', ask:'Ofis için orta topuklu bir ayakkabı'},
+  {f:'worn_rieker_women_leather_shoe', n:'Makosen', t:'makosen', tag:'Deri · düz taban', d:'Yıllandıkça güzelleşen deri, rahat taban. Yeni casual.', ask:'Makosen bakıyorum'},
+  {f:'sport_shoe_for_women', n:'Spor', t:'spor', tag:'Süet & deri', d:'Şehirde zarif bir spor alternatif; jean ile de, trençle de.', ask:'Süet spor ayakkabı'},
+  {f:'pointy_stiletto_v2', n:'Pump', t:'stiletto', tag:'Minimal · keskin', d:'Tek parça, temiz çizgi. Gardırobun en çok çalışan topuklusu.', ask:'Siyah stiletto'},
+];
+const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
+const cache = {};
+const load = f => cache[f] ??= loader.loadAsync(`/models/${f}.glb`).then(g => {
+  const o = g.scene, s = new THREE.Box3().setFromObject(o).getSize(new THREE.Vector3());
+  o.scale.setScalar(2.2 / Math.max(s.x, s.y, s.z));
+  o.position.sub(new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()));
+  o.traverse(m => { if (m.isMesh) m.castShadow = true; });
+  const pivot = new THREE.Group(); pivot.add(o); return pivot;
+});
+function makeStage(el, dark){
+  const r = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.toneMapping = THREE.ACESFilmicToneMapping; r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+  el.appendChild(r.domElement);
+  const scene = new THREE.Scene();
+  scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), .04).texture;
+  const cam = new THREE.PerspectiveCamera(32, 1, .01, 100); cam.position.set(4.2, 1.8, 5.4);
+  const key = new THREE.DirectionalLight(dark ? 0xffe2bd : 0xfff4e6, dark ? 2.4 : 1.6); key.position.set(3,5,2); key.castShadow = true; key.shadow.mapSize.set(1024,1024); key.shadow.radius = 6; scene.add(key);
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 64), new THREE.ShadowMaterial({opacity: dark ? .5 : .18}));
+  ground.rotation.x = -Math.PI/2; ground.position.y = -1.1; ground.receiveShadow = true; scene.add(ground);
+  const ctl = new OrbitControls(cam, r.domElement);
+  ctl.enableDamping = true; ctl.enablePan = false; ctl.minDistance = 2.2; ctl.maxDistance = 8; ctl.autoRotate = true; ctl.autoRotateSpeed = 1.2; ctl.target.set(0,-.1,0);
+  const resize = () => { const w = el.clientWidth, h = el.clientHeight; r.setSize(w, h); cam.aspect = w/h; cam.updateProjectionMatrix(); };
+  new ResizeObserver(resize).observe(el); resize();
+  let vis = true; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(el);
+  r.setAnimationLoop(() => { if (!vis) return; ctl.update(); r.render(scene, cam); });
+  return {scene, cam, ctl, ground};
+}
+const ground = (st, o) => { o.position.y = 0; const b = new THREE.Box3().setFromObject(o); o.position.y = st.ground.position.y - b.min.y + .001; };
+
+const hero = makeStage(document.getElementById('hero3d'), false);
+hero.ctl.enableZoom = false; hero.ctl.autoRotateSpeed = 1.6;
+load(MODELS[0].f).then(m => {
+  const o = m.clone(); hero.scene.add(o); ground(hero, o); document.getElementById('heroLoad').style.opacity = 0;
+  window.dispatchEvent(new Event('hero:ready'));
+  // giriş: ayakkabı yukarıdan, hızlı dönerek iner ve yavaşlar
+  const y0 = o.position.y; o.position.y = y0 + 1.6; o.rotation.y = -Math.PI * 1.5; o.scale.setScalar(.6);
+  hero.ctl.autoRotate = false;
+  const enter = () => { const t0 = performance.now(); (function step(){ const k = Math.min(1, (performance.now() - t0) / 1800), e = 1 - Math.pow(1 - k, 4);
+    o.position.y = y0 + 1.6 * (1 - e); o.rotation.y = -Math.PI * 1.5 * (1 - e); o.scale.setScalar(.6 + .4 * e);
+    if (k < 1) requestAnimationFrame(step); else hero.ctl.autoRotate = true; })(); };
+  if (window.__introDone || !document.body.classList.contains('intro-wait')) enter(); else window.addEventListener('intro:done', () => setTimeout(enter, 350), { once: true });
+});
+
+const salon = makeStage(document.getElementById('salon3d'), true);
+const pick = document.getElementById('pick');
+pick.innerHTML = MODELS.map((m,i) => `<li><button data-i="${i}">${m.n}<small>${byType(m.t).length} MODEL</small></button></li>`).join('');
+let current = null, idx = 0;
+async function show(i){
+  idx = i; const m = MODELS[i];
+  pick.querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
+  document.getElementById('dTag').textContent = m.tag; document.getElementById('dName').textContent = m.n; document.getElementById('dDesc').textContent = m.d;
+  document.getElementById('dCount').firstChild.textContent = byType(m.t).length;
+  document.getElementById('dGo').href = `/koleksiyon?tur=${m.t}`; document.getElementById('dAsk').dataset.ela = m.ask;
+  const L = document.getElementById('salonLoad'); L.style.opacity = 1;
+  const o = await load(m.f); if (idx !== i) return;
+  if (current) salon.scene.remove(current);
+  current = o; salon.scene.add(o); ground(salon, o); L.style.opacity = 0;
+}
+pick.onclick = e => { const b = e.target.closest('button'); if (b) show(+b.dataset.i); };
+const views = {side:[4.6,.4,0], front:[0,.5,4.6], top:[.01,5,.01]};
+document.querySelector('#salon3d .tools').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.id === 'tSpin') { salon.ctl.autoRotate = !salon.ctl.autoRotate; b.classList.toggle('on'); return; }
+  const to = new THREE.Vector3(...views[b.dataset.v]), from = salon.cam.position.clone(); let t = 0;
+  salon.ctl.autoRotate = false; document.getElementById('tSpin').classList.remove('on');
+  const step = () => { t = Math.min(1, t + .04); salon.cam.position.lerpVectors(from, to, 1 - Math.pow(1 - t, 3)); if (t < 1) requestAnimationFrame(step); };
+  step();
+};
+show(0);
+new IntersectionObserver(([e], o) => { if (e.isIntersecting) { MODELS.forEach(m => load(m.f)); o.disconnect(); } }, {rootMargin:'600px'}).observe(document.getElementById('salon'));
+
+/* VII · canlı demo: gerçek sistemin gerçek cevabı (bir kez çalışır) */
+const facts = document.getElementById('facts');
+const sizes = catalog.flatMap(p => p.sizes.filter(s => s.stock > 0)).length;
+facts.innerHTML = `<div><b>${catalog.length}</b><span>model stokta</span></div><div><b>${sizes}</b><span>numara · renk kırılımı</span></div><div><b>35–42</b><span>numara aralığı</span></div>`;
+let demoRun = false;
+new IntersectionObserver(async ([e]) => {
+  if (!e.isIntersecting || demoRun) return; demoRun = true;
+  const box = document.getElementById('demoLines');
+  const add = (cls, html) => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; box.appendChild(d); requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('show'))); return d; };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  // senaryo katalogdan seçilir: 38'i kalmamış ama başka renginde 38 olan bir model (kırılımı gösterir)
+  const has = (p, n) => p.sizes.some(s => +s.size === n && s.stock > 0);
+  const pr = catalog.find(p => !has(p, 38) && catalog.some(q => q.model === p.model && q.type === p.type && q !== p && has(q, 38))) || catalog[0];
+  const sib = catalog.find(q => q.model === pr.model && q.type === pr.type && q !== pr && has(q, 38));
+  const ask = async (history, seen) => fetch('/api/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({history, context:{page:'home', seen, lastShown: seen.slice(-1)}})}).then(x => x.json()).catch(() => null);
+  const say = (r) => { const shows = (r?.actions || []).filter(a => a.type === 'show').flatMap(a => a.items); const cart = (r?.actions || []).some(a => a.type === 'cart');
+    add('bot', Site.esc(r?.reply || '') + (shows.length ? `<div>${shows.map(s => `<span class="btn">${Site.esc(s.model + ' · ' + s.color_label)}</span>`).join('')}</div>` : '') + (cart ? '<div><span class="btn on">Çantaya eklendi</span></div>' : '')); return shows; };
+  const q1 = `${pr.model} ${pr.color_label.toLowerCase()} 38 numara var mı?`;
+  add('me', q1); await wait(700);
+  const r1 = await ask([{role:'user', content:q1}], [pr.slug]); const shown = say(r1);
+  if (!sib) return;
+  await wait(1800);
+  const q2 = `${sib.color_label.toLowerCase()} olanın 38 numarasını ekle`;
+  add('me', q2); await wait(700);
+  say(await ask([{role:'user', content:q1}, {role:'assistant', content:r1?.reply || '', shown: shown.map(s => s.slug)}, {role:'user', content:q2}], [pr.slug, ...shown.map(s => s.slug)]));
+}, {threshold:.4}).observe(document.getElementById('demo'));
+</script>
+</body>
+</html>

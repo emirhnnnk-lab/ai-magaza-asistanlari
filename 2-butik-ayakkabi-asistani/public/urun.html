@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ürün — Örnek Butik</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+.crumb{padding:28px 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe)}
+.crumb a:hover{color:var(--espresso)}
+.pd{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(30px,5vw,80px);padding-bottom:90px}
+.gal{display:grid;grid-template-columns:80px 1fr;gap:14px;position:sticky;top:100px;align-self:start}
+.thumbs{display:flex;flex-direction:column;gap:10px}
+.thumbs img{width:80px;height:80px;object-fit:cover;background:#efe8de;mix-blend-mode:multiply;cursor:pointer;opacity:.55;transition:.3s}
+.thumbs img.on,.thumbs img:hover{opacity:1}
+.main{aspect-ratio:1/1.1;background:#efe8de;overflow:hidden;cursor:zoom-in;position:relative}
+.main img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:transform .2s}
+.info h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,4.4vw,64px);line-height:1;margin:12px 0 6px}
+.info .sub{color:var(--taupe);font-size:14px}
+.info .price{font-family:var(--serif);font-size:32px;margin:22px 0 8px}
+.info .pay{font-size:12px;color:var(--taupe)}
+.lbl{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe);margin:34px 0 12px}
+.lbl b{font-weight:400;color:var(--espresso);letter-spacing:.1em;text-transform:none;font-size:13px}
+.fam{display:flex;gap:10px;flex-wrap:wrap}
+.fam a{width:64px;text-align:center;font-size:10px;color:var(--taupe)}
+.fam img{width:64px;height:64px;object-fit:cover;background:#efe8de;mix-blend-mode:multiply;border:1px solid transparent;margin-bottom:6px}
+.fam a.on img{border-color:var(--espresso)}
+.szs{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.szs button{all:unset;cursor:pointer;text-align:center;border:1px solid var(--line);padding:13px 0;font-size:14px;position:relative;transition:.2s}
+.szs button:hover{border-color:var(--espresso)}
+.szs button.on{background:var(--espresso);color:var(--ivory);border-color:var(--espresso)}
+.szs button.out{color:#bdb2a5;cursor:not-allowed;background:linear-gradient(to top right,transparent calc(50% - .5px),#d9cfc3 50%,transparent calc(50% + .5px))}
+.szs button.low::after{content:"son";position:absolute;top:2px;right:4px;font-size:8px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+.fitnote{margin-top:12px;font-size:13px;line-height:1.6;padding:12px 14px;background:var(--cream)}
+.buy{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:26px}
+.buy .ask{all:unset;cursor:pointer;border:1px solid var(--espresso);padding:0 20px;font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+.msg{min-height:20px;margin-top:10px;font-size:13px;color:var(--gold)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:40px}
+.ic{border:1px solid var(--line);padding:20px 20px 18px;background:#fbf8f3}
+.ic .k{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe)}
+.ic .v{font-family:var(--serif);font-size:28px;line-height:1.1;margin:8px 0 6px}
+.ic p{font-size:12.5px;line-height:1.6;color:var(--muted)}
+.ic.warn{border-color:rgba(176,141,87,.6)}
+.ic.warn p{color:#8a6a33}
+.ic.wide{grid-column:1/-1}
+.ic .miss{color:var(--taupe);font-style:italic}
+.ic .miss a{border-bottom:1px solid var(--gold);font-style:normal}
+.gauge{display:flex;align-items:flex-end;gap:16px;margin-top:6px}
+.gauge svg{flex:0 0 auto}
+.rows div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.rows div:last-child{border:0}
+.rows span{color:var(--taupe)}
+.more{padding:20px 0 120px}
+.more h2{font-family:var(--serif);font-weight:300;font-size:clamp(34px,4vw,52px);margin-bottom:34px}
+.more .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+@media (max-width:900px){
+  .pd{grid-template-columns:1fr}
+  .gal{position:static;grid-template-columns:1fr}
+  .thumbs{flex-direction:row;order:2;overflow-x:auto}
+  .thumbs img{width:64px;height:64px}
+  .more .grid{grid-template-columns:repeat(2,1fr)}
+  .szs{grid-template-columns:repeat(4,1fr)}
+}
+@media (max-width:480px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-page="urun">
+<div class="wrap crumb" id="crumb"><a href="/">Ana sayfa</a> / <a href="/koleksiyon">Koleksiyon</a></div>
+<div class="wrap pd" id="pd"></div>
+<div class="wrap more" id="more"></div>
+<script src="/assets/site.js"></script>
+<script>
+const slug = new URLSearchParams(location.search).get('s');
+window.ELA_PRODUCT = slug;
+</script>
+<script src="/assets/asistan.js"></script>
+<script>
+(async () => {
+  const { esc, tl } = Site;
+  const r = await fetch('/api/product?slug=' + encodeURIComponent(slug));
+  if (!r.ok) { document.getElementById('pd').innerHTML = '<p class="serif" style="font-size:28px;padding:60px 0">Bu ürün bulunamadı. <a class="link" href="/koleksiyon">Koleksiyona dön</a></p>'; return; }
+  const p = await r.json();
+  document.title = `${p.model} ${p.color_label} — Örnek Butik`;
+  document.getElementById('crumb').insertAdjacentHTML('beforeend', ` / <a href="/koleksiyon?tur=${p.type}">${esc(p.type_tr)}</a>`);
+  const mySize = +Site.store.get('ece_size', 0) || 0;
+  const rec = mySize ? (p.fit === 'bir numara büyük' ? mySize + 1 : mySize) : 0;
+  let sel = rec && p.sizes.some(s => +s.size === rec && s.stock > 0) ? rec : 0;
+  const ela = (q) => `<a href="#" data-ela="${esc(q)}">Ela'ya sorun</a>`;
+
+  // topuk görseli: ayakkabı silüeti + cm cetveli (gerçek değer, ölçekli)
+  const h = p.heel_cm ?? 0, H = Math.min(12, h), px = 6 + H * 7;
+  const gauge = `<svg width="120" height="100" viewBox="0 0 120 100" aria-hidden="true">
+    <line x1="112" y1="94" x2="112" y2="10" stroke="#d9c9b4"/>${[0,2,4,6,8,10,12].map(c => `<line x1="108" x2="116" y1="${94 - c*7}" y2="${94 - c*7}" stroke="#d9c9b4"/><text x="100" y="${97 - c*7}" font-size="7" fill="#8a7a68" text-anchor="end">${c}</text>`).join('')}
+    <path d="M6 94 L78 94 Q84 94 84 ${94 - px} L74 ${94 - px} Q44 ${94 - px * .3} 10 ${90 - px * .15} Q4 92 6 94Z" fill="#2a211b"/>
+    <line x1="84" x2="108" y1="${94 - px}" y2="${94 - px}" stroke="#b08d57" stroke-dasharray="2 2"/></svg>`;
+
+  const sizesHTML = () => p.sizes.map(s => `<button data-sz="${s.size}" class="${s.stock <= 0 ? 'out' : ''} ${s.stock === 1 ? 'low' : ''} ${+s.size === sel ? 'on' : ''}" ${s.stock <= 0 ? 'aria-disabled="true" title="Stokta yok"' : ''}>${s.size}</button>`).join('');
+  const fitTxt = p.fit === 'bir numara büyük' ? `Bu model <b>bir numara büyük</b> tercih ediliyor.${mySize ? ` ${mySize} giyiyorsanız <b>${mySize + 1}</b> öneririz.` : ''}` : p.fit === 'tam kalıp' ? `Tam kalıp: her zamanki numaranızı alabilirsiniz.` : `Kalıp bilgisi bu üründe belirtilmemiş. ${ela('Bu modelin kalıbı nasıl?')}`;
+  const outer = p.outer || '—';
+
+  document.getElementById('pd').innerHTML = `
+  <div class="gal">
+    <div class="thumbs">${p.images.map((im, i) => `<img src="${esc(im)}" data-i="${i}" class="${i ? '' : 'on'}" alt="">`).join('')}</div>
+    <div class="main" id="main"><img src="${esc(p.images[0])}" alt="${esc(p.name)}"></div>
+  </div>
+  <div class="info">
+    <div class="eyebrow">${esc(p.type_tr)}${p.lists.includes('Yeni Sezon') ? ' · Yeni sezon' : ''}</div>
+    <h1>${esc(p.model)}</h1>
+    <div class="sub">${esc(p.color_label)} · ${esc(outer)}</div>
+    <div class="price">${tl(p.price)}</div>
+    <div class="pay">Ücretsiz kargo · 14 gün içinde iade · Kapıda nakit ödeme</div>
+
+    ${p.family.length > 1 ? `<div class="lbl">Renk <b>${esc(p.color_label)}</b></div><div class="fam">${p.family.map(f => `<a href="/urun?s=${encodeURIComponent(f.slug)}" class="${f.slug === p.slug ? 'on' : ''}"><img src="${esc(f.img)}" alt="">${esc(f.color_label)}</a>`).join('')}</div>` : ''}
+
+    <div class="lbl">Numara <b id="selTxt">${sel ? sel + ' seçildi' : 'Seçiniz'}</b></div>
+    <div class="szs" id="szs">${sizesHTML()}</div>
+    <div class="fitnote">${fitTxt}</div>
+    <div class="buy"><button class="cta" id="add">Çantaya ekle</button><button class="ask" data-ela="">Ela'ya sor</button></div>
+    <div class="msg" id="msg"></div>
+
+    <div class="cards">
+      <div class="ic ${p.heel_conflict ? 'warn' : ''}"><div class="k">Topuk</div>
+        <div class="gauge">${gauge}<div><div class="v">${p.heel_cm != null ? esc(p.heel.replace(/ \(.*/, '')) : '—'}</div><p>${esc(p.heel_type || '')}${p.platform_cm ? ` · ${p.platform_cm} cm platform` : ''}</p></div></div>
+        ${p.heel_conflict ? `<p>Ürün bilgisinde iki farklı ölçü var (${p.heel_conflict.join(' ve ')} cm). ${ela('Topuk tam olarak kaç cm?')}</p>` : ''}</div>
+      <div class="ic"><div class="k">Kalıp</div><div class="v">${p.fit ? esc(p.fit[0].toUpperCase() + p.fit.slice(1)) : '<span class="miss">Belirtilmemiş</span>'}</div><p>${p.fit === 'bir numara büyük' ? 'Bir büyük numara seçin.' : p.fit ? 'Standart numaranız.' : ela('Kalıbı dar mı?')}</p></div>
+      <div class="ic wide"><div class="k">Malzeme</div><div class="rows">
+        <div><span>Dış</span>${esc(outer)}</div><div><span>İç</span>${p.lining ? esc(p.lining) : '<i class="miss">belirtilmemiş</i>'}</div><div><span>Taban</span>${p.sole ? esc(p.sole) : '<i class="miss">belirtilmemiş</i>'}</div><div><span>Menşei</span>${esc(p.origin || '—')}</div></div></div>
+      ${['bot','cizme'].includes(p.type) ? `<div class="ic wide"><div class="k">${p.type === 'cizme' ? 'Çizme' : 'Bot'} ölçüleri</div><div class="rows">
+        <div><span>Konç uzunluğu</span>${p.shaft_cm ? p.shaft_cm + ' cm' : `<i class="miss">belirtilmemiş · ${ela('Konç uzunluğu kaç cm?')}</i>`}</div>
+        ${p.type === 'cizme' ? `<div><span>Baldır çapı</span>${p.calf_conflict ? `${p.calf_conflict.join(' / ')} cm <i class="miss">(ürün bilgisinde iki farklı ölçü · ${ela('Baldır çapı tam olarak kaç cm?')})</i>` : p.calf_note ? esc(p.calf_note) : p.calf_cm ? p.calf_cm + ' cm' : `<i class="miss">belirtilmemiş · ${ela('Baldır çapı kaç cm?')}</i>`}</div>` : ''}
+        ${p.opening_cm ? `<div><span>Boğaz genişliği</span>${p.opening_cm} cm</div>` : ''}</div></div>` : ''}
+      <div class="ic wide"><div class="k">Mevsim</div><div class="v">${p.warm_lining ? 'Kışlık' : ['sandalet','terlik'].includes(p.type) ? 'Yazlık' : 'Dört mevsim'}</div><p>${p.warm_lining ? esc(p.lining) + ' ile soğukta sıcak tutar.' : p.lining ? esc(p.lining) + ' iç.' : ''}</p></div>
+    </div>
+  </div>`;
+
+  // galeri + yakın bakış
+  const main = document.getElementById('main'), mi = main.querySelector('img');
+  document.querySelector('.thumbs').onclick = e => { const t = e.target.closest('img'); if (!t) return; mi.src = t.src; document.querySelectorAll('.thumbs img').forEach(x => x.classList.toggle('on', x === t)); };
+  main.onmousemove = e => { const b = main.getBoundingClientRect(); mi.style.transformOrigin = `${(e.clientX - b.left) / b.width * 100}% ${(e.clientY - b.top) / b.height * 100}%`; mi.style.transform = 'scale(1.8)'; };
+  main.onmouseleave = () => mi.style.transform = '';
+
+  document.getElementById('szs').onclick = e => {
+    const b = e.target.closest('[data-sz]'); if (!b) return;
+    if (b.classList.contains('out')) { document.getElementById('msg').innerHTML = `${b.dataset.sz} numara bu renkte kalmadı. <a href="#" data-ela="${esc(p.model + ' ' + p.color_label.toLowerCase() + ' ' + b.dataset.sz + ' numara var mı?')}" style="border-bottom:1px solid">Başka renkte var mı, Ela'ya sorun</a>`; return; }
+    sel = +b.dataset.sz; document.getElementById('szs').innerHTML = sizesHTML(); document.getElementById('selTxt').textContent = sel + ' seçildi'; document.getElementById('msg').textContent = '';
+    Site.store.set('ece_size', p.fit === 'bir numara büyük' ? sel - 1 : sel);
+  };
+  document.getElementById('add').onclick = () => {
+    if (!sel) { document.getElementById('msg').textContent = 'Lütfen numaranızı seçin.'; return; }
+    Site.add({ ...p.card, size: sel }); document.getElementById('msg').textContent = `${sel} numara çantanızda.`;
+  };
+
+  document.getElementById('more').innerHTML = p.similar.length ? `<h2>Benzer <em>silüetler</em></h2><div class="grid">${p.similar.map(x => Site.cardHTML(x)).join('')}</div>` : '';
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Örnek Moda · Tesettür Giyimin Tek Adresi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="announce">2.500 TL üzeri alışverişlerde kargo bedava · 7 gün ücretsiz iade</div>
+<header class="top">
+  <div class="wrap">
+    <a href="#/" class="logo">moda<i>.</i></a>
+    <nav class="menu" id="menu"></nav>
+    <div class="head-actions">
+      <button class="icon-btn" aria-label="Ara" onclick="openChat('Bir şey arıyorum')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <button class="icon-btn" aria-label="Sepet" onclick="toggleCart(true)"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="badge" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer><div class="wrap"><div><span class="logo" style="color:#fff">moda<i>.</i></span><p style="margin-top:8px">Örnek Mah. Örnek Cad. No: 1, İstanbul</p></div><div>0850 000 00 00<br>info@ornek-moda.com</div><div style="opacity:.6">Demo · asistan yapay zekâ ile çalışır</div></div></footer>
+
+<!-- asistan -->
+<button class="fab" onclick="openChat()"><span class="av">D</span><span>Defne<small>Stil danışmanınız · çevrimiçi</small></span></button>
+<div id="nudgeSlot"></div>
+<aside class="picks" id="picks" aria-label="Defne'nin seçkisi">
+  <div class="picks-head"><div><small>Defne'nin seçkisi</small><b id="picksTitle"></b></div><button onclick="closePicks()" aria-label="Kapat">×</button></div>
+  <div class="picks-list" id="picksList"></div>
+</aside>
+<aside class="chat" aria-label="Stil danışmanı">
+  <div class="chat-head"><span class="av">D</span><div><b>Defne</b><small>● Moda stil danışmanı · çevrimiçi</small></div><button onclick="closeChat()" aria-label="Kapat">×</button></div>
+  <div class="msgs" id="msgs"></div>
+  <div class="quick" id="quick"></div>
+  <form class="composer" onsubmit="sendMsg(event)"><input id="inp" placeholder="Defne'ye yazın…" autocomplete="off"><button aria-label="Gönder"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+</aside>
+
+<!-- sepet -->
+<div class="veil" onclick="toggleCart(false)"></div>
+<aside class="drawer">
+  <h3>Sepetim <button onclick="toggleCart(false)" style="font-size:26px;font-weight:200">×</button></h3>
+  <div class="ship" id="ship"></div>
+  <div class="items" id="items"></div>
+  <div class="foot"><div class="t"><span>Toplam</span><b id="total">0 TL</b></div><button class="btn" style="width:100%">Siparişi Tamamla</button></div>
+</aside>
+
+<!-- 3D yakın bakış -->
+<div class="lb" id="lb">
+  <button class="close" onclick="closeLb()">×</button>
+  <button class="nav l" onclick="lbStep(-1)">‹</button>
+  <div class="stagebox" id="lbBox"><div class="layer back"></div><div class="layer front"></div></div>
+  <button class="nav r" onclick="lbStep(1)">›</button>
+  <div class="tip">Faresi gezdirin · ok tuşlarıyla geçin · Esc ile kapatın</div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

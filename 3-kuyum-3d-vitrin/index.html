@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Örnek Kuyum · Altın & Pırlanta</title>
+<meta name="description" content="Örnek Kuyumculuk — koleksiyonu her açıdan keşfedin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+</head>
+<body class="is-loading">
+
+<!-- 3D sahne: tüm sayfa boyunca tek tuval -->
+<div class="motif" id="motifA"></div>
+<div class="motif" id="motifB"></div>
+<div id="stage">
+  <div class="halo"></div>
+  <canvas id="gl"></canvas>
+  <div class="floor-shadow"></div>
+</div>
+
+<!-- Üst bar -->
+<header class="top">
+  <button class="top-link" id="navCollection">Koleksiyon</button>
+  <a class="brand" href="#" id="brandHome" aria-label="Örnek Kuyum ana sayfa">
+    <span class="brand-name">ÖRNEK KUYUM</span>
+    <span class="brand-sub">Altın · Pırlanta</span>
+  </a>
+  <button class="top-link" id="navDeniz">Deniz'e danışın</button>
+</header>
+
+<!-- Açılış -->
+<section class="hero" id="hero">
+  <p class="hero-eyebrow">Yeni sezon · 2026</p>
+  <h1 class="hero-title">Işığın<br><em>en sade</em> hâli.</h1>
+  <div class="hero-foot">
+    <p class="hero-lede">On parça, tek bir masa. Her birini elinize alır gibi, her açıdan inceleyin.</p>
+    <button class="btn-primary" id="enter">Koleksiyonu keşfedin</button>
+  </div>
+  <div class="scroll-cue"><span></span></div>
+</section>
+
+<!-- Vitrin arayüzü -->
+<section class="gallery" id="gallery" aria-live="polite">
+  <div class="filters" id="filters"></div>
+
+  <article class="info" id="info">
+    <p class="info-index"><span id="pIndex">01</span> <i>/</i> <span id="pTotal">10</span></p>
+    <p class="info-cat" id="pCat"></p>
+    <h2 class="info-name" id="pName"></h2>
+    <p class="info-line" id="pLine"></p>
+    <dl class="info-specs" id="pSpecs"></dl>
+    <p class="info-price" id="pPrice"></p>
+    <div class="info-actions">
+      <button class="btn-primary" id="askDeniz">Deniz'e sorun</button>
+      <button class="btn-ghost" id="openDetail">Detaylar</button>
+    </div>
+  </article>
+
+  <div class="view-tools">
+    <button class="tool" id="toolAuto" aria-pressed="true" title="Kendi kendine dönsün">
+      <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v4h-4"/></svg>
+    </button>
+    <button class="tool" id="toolReset" title="Görünümü sıfırla">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+    </button>
+  </div>
+
+  <p class="hint" id="hint">Sürükleyin · Çevirin · Yakınlaştırın</p>
+
+  <nav class="rail" id="rail" aria-label="Ürünler"></nav>
+</section>
+
+<!-- Detay katmanı -->
+<aside class="sheet" id="sheet" aria-hidden="true">
+  <button class="sheet-close" id="sheetClose" aria-label="Kapat">×</button>
+  <div class="sheet-body" id="sheetBody"></div>
+</aside>
+
+<!-- Deniz -->
+<button class="deniz-fab" id="denizFab" aria-label="Deniz'e danışın">
+  <span class="fab-dot">D</span><span class="fab-text">Deniz'e danışın</span>
+</button>
+
+<aside class="deniz" id="deniz" aria-hidden="true">
+  <header class="deniz-head">
+    <div class="deniz-avatar">D</div>
+    <div>
+      <p class="deniz-name">Deniz</p>
+      <p class="deniz-role">Örnek Kuyum mücevher danışmanı</p>
+    </div>
+    <button class="deniz-close" id="denizClose" aria-label="Kapat">×</button>
+  </header>
+  <div class="deniz-log" id="denizLog"></div>
+  <div class="deniz-chips" id="denizChips"></div>
+  <form class="deniz-form" id="denizForm" autocomplete="off">
+    <input id="denizInput" placeholder="Deniz'e bir şey sorun…" aria-label="Mesajınız">
+    <button aria-label="Gönder"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </form>
+</aside>
+
+<div class="loader" id="loader"><span class="loader-mark">G</span><span class="loader-bar"><i id="loaderBar"></i></span></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

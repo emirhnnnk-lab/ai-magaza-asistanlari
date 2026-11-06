@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seanslarım — Örnek Güzellik Merkezi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  .s-kap{max-width:720px;margin:0 auto;padding:60px 16px 100px}
+  .s-kap h1{font-size:clamp(40px,6vw,60px);margin-bottom:10px}
+  .s-kap > p{color:var(--soluk);margin-bottom:28px}
+  .tel-form{display:flex;gap:10px;background:var(--beyaz);border-radius:999px;padding:7px 7px 7px 22px;box-shadow:var(--golge)}
+  .tel-form input{flex:1;border:0;outline:0;font:inherit;font-size:16px;background:none;min-width:0}
+  .ipucu{font-size:12px;color:var(--soluk);margin-top:10px}
+  .ipucu button{color:var(--gul2);border-bottom:1px dashed}
+  .blok{background:var(--beyaz);border-radius:22px;padding:26px;margin-top:20px}
+  .blok h2{font-size:30px;margin-bottom:4px}
+  .blok .alt{font-size:13px;color:var(--soluk)}
+  .sayac{display:flex;gap:6px;margin:20px 0 10px}
+  .sayac i{flex:1;height:10px;border-radius:5px;background:var(--krem2)}
+  .sayac i.ok{background:var(--gul)}
+  .sayac-yazi{display:flex;justify-content:space-between;font-size:14px}
+  .sayac-yazi b{font-family:var(--serif);font-size:30px;font-weight:500}
+  .liste{margin-top:18px;font-size:14px}
+  .liste div{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--krem2)}
+  .liste small{color:var(--soluk)}
+  .rozet{font-size:11px;padding:3px 9px;border-radius:999px;background:#e3f2e8;color:#2f7a4b}
+  .oneri{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--krem);font-size:14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+  .sozlesme{font-size:13px;color:var(--soluk);margin-top:14px;line-height:1.7}
+  .yaklasan{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+  .yaklasan b{font-family:var(--serif);font-size:24px;font-weight:500;display:block}
+  .yaklasan .btns{display:flex;gap:8px}
+  .bos{color:var(--soluk);font-size:14px}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="index.html"><span class="ay"></span>Örnek <i>Güzellik</i></a>
+  <a class="btn koyu kucuk" href="index.html">Siteye dön</a>
+</header>
+<main class="s-kap">
+  <p class="ust">Şeffaflık sözümüz</p>
+  <h1>Seanslarım</h1>
+  <p>Paketinizde kaç seans kaldığını, hangi gün kimin yaptığını ve yaklaşan randevularınızı istediğiniz an görün. Sürpriz yok, “sistemde öyle görünüyor” yok.</p>
+  <form class="tel-form" id="telForm">
+    <input id="tel" inputmode="tel" placeholder="Telefon numaranız" autocomplete="tel">
+    <button class="btn koyu">Göster</button>
+  </form>
+  <p class="ipucu">Gerçek kurulumda telefonunuza SMS ile tek kullanımlık kod gelir. Demo için: <button type="button" id="demoTel">0500 000 00 00</button></p>
+  <div id="sonuc"></div>
+</main>
+<script type="module">
+import { HIZMETLER, tl } from './js/veri.js';
+import { kayit, kaydet, telSade, ARALIK } from './js/kayit.js';
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const tarih = (t) => new Date(t + 'T12:00:00').toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+const gunAd = (t) => new Date(t + 'T12:00:00').toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const bugun = iso(new Date());
+
+function goster() {
+  const t = telSade($('#tel').value);
+  if (t.length < 10) return ($('#sonuc').innerHTML = '<div class="blok"><p class="bos">Lütfen 10 haneli telefon numaranızı yazın.</p></div>');
+  const k = kayit();
+  const R = k.randevular.filter((r) => telSade(r.tel) === t);
+  const P = k.paketler.filter((p) => telSade(p.tel) === t);
+  if (!R.length && !P.length) return ($('#sonuc').innerHTML = '<div class="blok"><p class="bos">Bu numaraya kayıtlı randevu bulunamadı. Ela ile ilk randevunuzu oluşturabilirsiniz.</p></div>');
+  const ad = (R[0] || P[0]).ad.split(' ')[0];
+  const yak = R.filter((r) => r.tarih >= bugun && r.durum === 'onayli').sort((a, b) => (a.tarih + a.saat).localeCompare(b.tarih + b.saat));
+  let html = `<div class="blok"><h2>Merhaba ${esc(ad)}</h2><p class="alt">${R.filter((r) => r.durum === 'geldi').length} ziyaret · ilk ziyaret ${tarih(R.map((r) => r.tarih).sort()[0] || bugun)}</p></div>`;
+
+  for (const p of P) {
+    const kullan = R.filter((r) => r.hid === p.hid && r.durum === 'geldi' && r.tarih >= p.alim).sort((a, b) => a.tarih.localeCompare(b.tarih));
+    const kalan = p.toplam - p.kullanilan;
+    const son = kullan.at(-1);
+    const oneri = new Date((son?.tarih || bugun) + 'T12:00:00'); oneri.setDate(oneri.getDate() + (ARALIK[p.hid] || 30));
+    const planli = yak.find((r) => r.hid === p.hid);
+    html += `<div class="blok"><p class="ust">Paketiniz</p><h2>${esc(p.paket)}</h2><p class="alt">Alım: ${tarih(p.alim)} · Ödenen: ${tl(p.odenen)} · Kalan borç: ${tl(p.kalan)}</p>
+      <div class="sayac">${Array.from({ length: p.toplam }, (_, i) => `<i class="${i < p.kullanilan ? 'ok' : ''}"></i>`).join('')}</div>
+      <div class="sayac-yazi"><span>${p.kullanilan} seans kullanıldı</span><span><b>${kalan}</b> seans kaldı</span></div>
+      <div class="liste">${kullan.map((r, i) => `<div><span>${i + 1}. seans · ${tarih(r.tarih)}</span><small>${esc(r.uzman)} <span class="rozet">tamamlandı</span></small></div>`).join('')}</div>
+      ${kalan > 0 ? `<div class="oneri">${planli ? `<span>Sıradaki seansınız <b>${gunAd(planli.tarih)} ${planli.saat}</b></span>` : `<span>Bir sonraki seans için ideal tarih: <b>${gunAd(iso(oneri))}</b></span><a class="btn koyu kucuk" href="index.html#ela=${encodeURIComponent(HIZMETLER.find((h) => h.id === p.hid).ad + ' paketimin sıradaki seansı için randevu almak istiyorum')}">Randevu al</a>`}</div>` : ''}
+      <p class="sozlesme">Sözleşme özeti: ${p.toplam} seans, süre sınırı yoktur. Kullanılmayan seanslar istenirse kalan seans bedeli üzerinden iade edilir. Ek başlık ya da ürün ücreti alınmaz. Her seans sonrası bu sayfa ve WhatsApp üzerinden bildirim alırsınız.</p></div>`;
+  }
+
+  html += `<div class="blok"><p class="ust">Yaklaşan randevular</p>${yak.length ? yak.map((r) => `
+    <div class="yaklasan" style="padding:12px 0;border-top:1px solid var(--krem2)"><div><b>${esc(r.hizmet)}</b><small style="color:var(--soluk)">${gunAd(r.tarih)} ${r.saat} · ${esc(r.uzman)}</small></div>
+    <div class="btns"><a class="btn cizgi kucuk" href="index.html#ela=${encodeURIComponent(`${gunAd(r.tarih)} ${r.saat} ${r.hizmet} randevumu ertelemek istiyorum`)}">Ertele</a><button class="btn kucuk" style="color:#c0504f" data-iptal="${r.id}">İptal</button></div></div>`).join('') : '<p class="bos">Yaklaşan randevunuz yok.</p>'}</div>`;
+  $('#sonuc').innerHTML = html;
+}
+$('#telForm').onsubmit = (e) => { e.preventDefault(); goster(); };
+$('#demoTel').onclick = () => { $('#tel').value = '0500 000 00 00'; goster(); };
+$('#sonuc').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-iptal]');
+  if (b && confirm('Randevunuzu iptal etmek istediğinize emin misiniz? 12 saat öncesine kadar ücretsizdir.')) {
+    kaydet((k) => { k.randevular.find((r) => r.id == b.dataset.iptal).durum = 'iptal'; });
+    goster();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resepsiyon — Örnek Güzellik Merkezi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/yonetim.css">
+</head>
+<body>
+
+<div class="giris" id="giris">
+  <form id="girisForm">
+    <a class="logo"><span class="ay"></span>Örnek <i>Güzellik</i></a>
+    <p>Personel girişi</p>
+    <input id="pin" inputmode="numeric" maxlength="4" placeholder="PIN" autocomplete="off">
+    <button class="btn koyu">Giriş</button>
+    <small>Demo PIN: 1234</small>
+  </form>
+</div>
+
+<div class="y-ust">
+  <a class="logo" href="index.html"><span class="ay"></span>Örnek <i>Güzellik</i></a>
+  <div class="gun-sec">
+    <button id="geri" aria-label="Önceki gün">‹</button>
+    <button id="bugun" class="bugun">Bugün</button>
+    <button id="ileri" aria-label="Sonraki gün">›</button>
+    <b id="gunAd"></b>
+  </div>
+  <div class="y-aks">
+    <button class="btn acik kucuk" id="yeniBtn">+ Randevu</button>
+    <button class="btn kucuk cizgi-acik" id="blokBtn">Saat kapat</button>
+    <button class="kucuk-link" id="demoBtn">Demo verisi</button>
+    <a class="kucuk-link" href="panel.html">Sahip paneli</a>
+    <a class="kucuk-link" href="index.html">Site</a>
+  </div>
+</div>
+
+<div class="y-govde">
+  <aside class="y-yan">
+    <div class="ozet" id="ozet"></div>
+    <h4>Sıradaki</h4>
+    <div id="siradaki"></div>
+    <h4>Bekleme listesi <span id="bekSay"></span></h4>
+    <div id="bekleme"></div>
+    <h4>Yarın için hatırlatma <span id="hatSay"></span></h4>
+    <div id="hatirlatma"></div>
+    <h4>Ara</h4>
+    <input class="ara" id="ara" placeholder="Müşteri adı ya da telefon">
+    <div id="araSonuc"></div>
+  </aside>
+  <main class="takvim-kap">
+    <div class="takvim" id="takvim"></div>
+  </main>
+</div>
+
+<!-- Detay çekmecesi -->
+<aside class="cekmece" id="cekmece" aria-hidden="true"></aside>
+
+<!-- Form penceresi -->
+<div class="pencere" id="pencere" hidden><form class="kutu" id="pForm"></form></div>
+
+<div class="bildirim" id="bildirim"></div>
+
+<script type="module" src="js/yonetim.js"></script>
+</body>
+</html>
