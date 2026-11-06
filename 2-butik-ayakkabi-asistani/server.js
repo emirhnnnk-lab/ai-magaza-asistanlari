@@ -212,7 +212,7 @@ async function chat({ history = [], context = {} }) {
   if (req && conv && Staff.enabled()) {
     const cur = context.slug && K.bySlug[context.slug];
     const summary = history.slice(-6).map((m) => `${m.role === "user" ? "Müşteri" : "Ela"}: ${String(m.content).slice(0, 160)}`).join("\n");
-    await Staff.escalate({ conv, question: req.question, dept: req.dept, summary, product: cur ? `${K.short(cur)} · ${cur.url}` : "" });
+    await Staff.escalate({ conv, question: req.question, dept: req.dept, summary, product: cur ? `${K.short(cur)}` : "" });
     (out.actions ||= []).push({ type: "staff" });
   }
   delete out.staffReq;

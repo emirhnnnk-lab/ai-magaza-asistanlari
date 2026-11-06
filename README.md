@@ -23,7 +23,7 @@ node server.js        # Moda Stil Danışmanı için: node demo/server.js
 ```
 
 ## Notlar
-- Ürün görselleri işletmelerin izniyle kullanılmıştır; Moda Stil Danışmanı'nda katalogun 40 ürünlük bir alt kümesi yer alır.
+- Ürün görselleri işletmelerin izniyle kullanılmıştır ve repoda yerel olarak durur. Moda Stil Danışmanı'nda katalogun 40 ürünlük bir alt kümesi yer alır; butikte görseli olmayan ürünler yer tutucuyla gösterilir.
 - 3D modeller (.glb) ticari kullanıma açık lisanslı kaynaklardan alınmıştır; telif ve atıf hakları ilgili sahiplerine aittir.
 
 ---

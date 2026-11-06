@@ -11,7 +11,7 @@ const n = (x) => String(x).replace(".", ","); // 3.5 → "3,5"
 const heelTxt = (p) => (p.heel_conflict ? `${n(Math.min(...p.heel_conflict))}–${n(Math.max(...p.heel_conflict))} cm (ürün bilgisinde iki farklı ölçü)` : p.heel_cm != null ? `${n(p.heel_cm)} cm` : null);
 
 // Ticimax orijinalleri ~5 MB: CDN'in boyutlandırma adresi kullanılır
-const rs = (u, w = 600) => String(u || "").replace("static.ticimax.cloud/7656/", `static.ticimax.cloud/cdn-cgi/image/width=${w},quality=85/7656/`);
+const rs = (u) => String(u || "");  // görseller yerel: public/img/urun/
 const card = (p) => ({ slug: p.slug, name: p.name, short: short(p), model: p.model, price: p.price, img: rs(p.images[0]), img2: rs(p.images[1] || p.images[0]), type: p.type, type_tr: p.type_tr,
   color: p.color, color_label: p.color_label, heel: heelTxt(p), heel_cm: p.heel_cm, sizes: p.sizes, in_stock: p.in_stock, fit: p.fit, url: p.url, yeni: p.lists.includes("Yeni Sezon"), warm: p.warm_lining });
 
