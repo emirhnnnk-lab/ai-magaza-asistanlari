@@ -1,5 +1,7 @@
 # AI Mağaza Asistanları
 
+> **EN summary:** AI shopping/booking assistants built for real small businesses (fashion, shoe boutique, jewelry 3D showcase, beauty salon), with brand names anonymized. Tool-calling LLM for catalog search, add-to-cart and appointments; each project has contract tests that verify the assistant's rules without calling the API.
+
 Farklı sektörlerdeki işletmeler için geliştirdiğim **yapay zekâ destekli dijital asistanlı web siteleri**. Her biri gerçek bir işletme için hazırlandı; bu repoda marka adları (Örnek Moda, Örnek Butik, Örnek Kuyum, Örnek Güzellik), adres ve iletişim bilgileri genelleştirilmiştir.
 
 | # | Proje | Sektör | Asistan ne yapıyor |
