@@ -1,0 +1,18 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dijital Asistan · Canlı Demo</title>
+<style>
+*{box-sizing:border-box;margin:0}body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0f2a31;color:#e9f4f5}
+header{padding:16px 20px}h1{font-size:20px;font-weight:700}header p{font-size:14px;color:#a9c7cb;margin-top:4px;line-height:1.45}
+.ipucu{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.ipucu span{background:#1d4651;border-radius:20px;padding:6px 12px;font-size:13px}
+main{display:grid;grid-template-columns:400px 1fr;gap:16px;padding:0 20px 20px;height:calc(100vh - 150px);min-height:600px}
+.kol{display:flex;flex-direction:column;min-height:0}.kol b{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7fc3ca;margin-bottom:8px}
+iframe{flex:1;width:100%;border:0;border-radius:18px;background:#fff}
+.tel iframe{border:8px solid #06171b;border-radius:30px}
+@media (max-width:900px){main{grid-template-columns:1fr;height:auto}.kol{height:780px}}
+</style></head><body>
+<header><h1>Dijital asistan · canlı demo</h1>
+<p>Solda hasta gibi yazın; sağda klinik paneli 3 saniyede bir güncellenir. Alınan randevular ve Ada'nın bilmeyip ekibe ilettiği sorular panelde görünür.</p>
+<div class="ipucu"><span>“Gece dişim zonkluyor, yüzüm şişti”</span><span>“Sigortam geçiyor mu?”</span><span>“Yarın sabah muayene olabilir miyim?”</span></div></header>
+<main><div class="kol tel"><b>Hasta ekranı</b><iframe src="index.html" title="Hasta ekranı"></iframe></div>
+<div class="kol"><b>Klinik paneli</b><iframe src="panel.html" title="Klinik paneli"></iframe></div></main>
+</body></html>

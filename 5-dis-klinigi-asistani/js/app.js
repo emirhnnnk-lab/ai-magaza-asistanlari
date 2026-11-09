@@ -146,6 +146,7 @@ class Ela {
       c = { html: `<p>${b.metin}</p>`, duz: b.metin.replace(/<[^>]+>/g, ''), kartlar: b.kartlar || [], slot: b.slot };
     }
     yaziyor.remove();
+    if (c.ekip) kaydet((k) => { k.ekip = [{ ...c.ekip, t: Date.now() }, ...(k.ekip || [])].slice(0, 30); });
     const ekipHtml = c.ekip ? `<div style="margin-top:10px;padding:10px 12px;border-radius:12px;font-size:12.5px;line-height:1.4;background:${c.ekip.oncelik === 'acil' ? '#fdecec' : '#e6f3f4'};color:${c.ekip.oncelik === 'acil' ? '#9b1c1c' : '#1f5662'}"><b>${c.ekip.oncelik === 'acil' ? '⚠ ACİL · ' : ''}Ekibe iletildi</b><br>“${esc(c.ekip.ozet)}”<br><span style="opacity:.75">Gerçek kurulumda sekreterin WhatsApp/Telegram ekranına düşer; cevap buraya gelir.</span></div>` : '';
     this.yaz(c.html + ekipHtml + c.kartlar.slice(0, 3).map((id) => this.kart(id)).join('') + (c.slot ? this.slotHtml(c.slot) : ''));
     this.gecmis.push({ rol: 'd', metin: c.duz || '' });

@@ -68,6 +68,7 @@
   <div class="kpi" id="kpi"></div>
   <div class="karne" id="karne"></div>
   <div class="iki">
+    <div class="kutu"><h3>Ekibe iletilen sorular <small style="font-weight:400;color:var(--soluk)">· Ada'nın bilmediği / acil</small></h3><div id="ekip"></div></div>
     <div class="kutu"><h3>Ada'dan gelen randevular</h3><div class="tablo-kap" id="tablo"></div></div>
     <div class="kutu"><h3>Geri kazanım listesi</h3><p style="font-size:13px;color:var(--soluk);margin:-8px 0 10px">Bakım zamanı geçmiş, randevusu olmayan müşteriler. Tek tıkla kişisel mesaj.</p><div id="geri"></div></div>
     <div class="kutu"><h3>Müşteriler ne soruyor?</h3><div id="sorular"></div><div class="icgoru" id="icgoru"></div></div>
@@ -88,7 +89,7 @@ function ciz() {
   const donusum = k.sohbetler ? Math.round((E.length / k.sohbetler) * 100) : 0;
   $('#kpi').innerHTML = `
     <div><span>Ada'nın aldığı randevu</span><b>${E.length}</b><small>Telefona hiç dokunmadan</small></div>
-    <div><span>Beklenen ciro</span><b>${tl(ciro)}</b><small>Ada kaynaklı</small></div>
+    <div><span>Beklenen ciro</span><b>${ciro.toLocaleString('tr-TR')} TL</b><small>Ada kaynaklı</small></div>
     <div><span>Mesai dışı</span><b>${mesaiDisi}</b><small>Klinik kapalıyken alınan randevu</small></div>
     <div><span>Gelmeme oranı</span><b>%${(() => { const g = R.filter((r) => ['geldi', 'gelmedi'].includes(r.durum)); return g.length ? Math.round(g.filter((r) => r.durum === 'gelmedi').length / g.length * 100) : 0; })()}</b><small>Sektörde hatırlatmasız ~%20</small></div>
     <div><span>Sohbet → randevu</span><b>%${donusum}</b><small>${k.sohbetler} sohbet · ${k.analizler} şikayet testi</small></div>`;
@@ -127,6 +128,7 @@ function ciz() {
     const d = r.tel.replace(/\D/g, '').replace(/^0/, '90');
     return `<div class="soru" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span><b>${esc(r.ad)}</b><small>${esc(r.hizmet)} · ${gun} gün önce</small></span><a class="rozet" target="_blank" rel="noopener" href="https://wa.me/${d}?text=${encodeURIComponent(msj)}">WhatsApp</a></div>`;
   }).join('') || '<p class="bos">Herkes zamanında geliyor.</p>';
+  $('#ekip').innerHTML = (k.ekip || []).map((e) => `<div class="soru" style="border-left:4px solid ${e.oncelik === 'acil' ? '#c0392b' : '#3f9aa3'};padding-left:10px"><span><b>${e.oncelik === 'acil' ? '⚠ ACİL · ' : ''}${esc(e.ozet)}</b><small>${new Date(e.t).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })} · sekreter cevaplayınca hastaya iletilir</small></span></div>`).join('') || '<p class="bos">Henüz soru yok. Sitede asistana “sigortam geçiyor mu?” yazmayı deneyin.</p>';
   const say = {};
   R.forEach((r) => (say[r.hizmet] = (say[r.hizmet] || 0) + 1));
   const enCok = Object.entries(say).sort((a, b) => b[1] - a[1])[0];
@@ -140,6 +142,8 @@ function ciz() {
 $('#ornek').onclick = () => { ornekYukle(); ciz(); };
 $('#temizle').onclick = () => { sifirla(); ciz(); };
 ciz();
+addEventListener('storage', ciz);
+setInterval(ciz, 3000);
 </script>
 </body>
 </html>
