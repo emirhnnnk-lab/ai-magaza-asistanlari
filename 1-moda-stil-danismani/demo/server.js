@@ -1,5 +1,6 @@
 // Örnek Moda demo sunucusu — bağımlılıksız Node.
 // node demo/server.js  →  http://localhost:3000
+const yedekFetch = require("../../llm-yedek");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -260,7 +261,7 @@ function runTool(name, a, actions) {
 // Responses API: araç çağırma + düşük akıl yürütme birlikte çalışıyor
 const RTOOLS = TOOLS.map((t) => ({ type: "function", ...t.function }));
 async function openai(body, attempt = 0) {
-  const r = await fetch("https://api.openai.com/v1/responses", {
+  const r = await yedekFetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + process.env.OPENAI_API_KEY },
     body: JSON.stringify({ model: MODEL, tools: RTOOLS, reasoning: { effort: "low" }, ...body }),

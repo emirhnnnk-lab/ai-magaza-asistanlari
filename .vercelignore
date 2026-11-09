@@ -1,0 +1,7 @@
+node_modules
+.env
+*.log
+.git
+1-moda-stil-danismani/data/_raw
+**/eval.log
+.env.local

@@ -1,4 +1,5 @@
 // Örnek Kuyum — statik sunucu + Deniz (LLM). Çalıştır: node server.js
+const yedekFetch = require("../llm-yedek");
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -15,7 +16,7 @@ try {
     if (m && !process.env[m[1]]) process.env[m[1]] = m[2];
   }
 } catch {}
-const KEY = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY;
+const KEY = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY || process.env.GROQ_API_KEY;
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
@@ -70,7 +71,7 @@ const TOOLS = [{
 }];
 
 async function openai(body) {
-  const r = await fetch('https://api.openai.com/v1/responses', {
+  const r = await yedekFetch('https://api.openai.com/v1/responses', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
     body: JSON.stringify({ model: MODEL, reasoning: { effort: 'low' }, ...body }),
@@ -119,7 +120,7 @@ async function deniz({ mesajlar = [], aktif, kanal }) {
 }
 
 /* ---------------- HTTP ---------------- */
-http.createServer(async (req, res) => {
+const server = http.createServer(async (req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
 
   if (p === '/api/deniz' && req.method === 'POST') {
@@ -148,4 +149,6 @@ http.createServer(async (req, res) => {
     res.writeHead(200, { 'Content-Type': TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
     res.end(data);
   });
-}).listen(PORT, () => console.log(`Örnek Kuyum hazır: http://localhost:${PORT}  ·  Deniz: ${KEY ? MODEL : 'anahtar yok, yedek beyin'}`));
+});
+if (require.main === module) server.listen(PORT, () => console.log(`Örnek Kuyum hazır: http://localhost:${PORT}  ·  Deniz: ${KEY ? MODEL : 'anahtar yok, yedek beyin'}`));
+module.exports = { server };

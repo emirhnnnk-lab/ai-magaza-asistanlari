@@ -1,0 +1,18 @@
+{
+  "rewrites": [
+    { "source": "/git/:s", "destination": "/api/git" },
+    { "source": "/vitrin", "destination": "/api/vitrin" },
+    { "source": "/(.*)", "has": [{ "type": "cookie", "key": "site", "value": "moda" }], "destination": "/api/moda" },
+    { "source": "/(.*)", "has": [{ "type": "cookie", "key": "site", "value": "butik" }], "destination": "/api/butik" },
+    { "source": "/(.*)", "has": [{ "type": "cookie", "key": "site", "value": "kuyum" }], "destination": "/api/kuyum" },
+    { "source": "/(.*)", "has": [{ "type": "cookie", "key": "site", "value": "guzellik" }], "destination": "/api/guzellik" },
+    { "source": "/", "destination": "/api/vitrin" }
+  ],
+  "functions": {
+    "api/moda.js": { "includeFiles": "1-moda-stil-danismani/**", "maxDuration": 60 },
+    "api/butik.js": { "includeFiles": "2-butik-ayakkabi-asistani/**", "maxDuration": 60 },
+    "api/kuyum.js": { "includeFiles": "3-kuyum-3d-vitrin/**", "maxDuration": 60 },
+    "api/guzellik.js": { "includeFiles": "4-guzellik-randevu-asistani/**", "maxDuration": 60 },
+    "api/vitrin.js": { "includeFiles": "vitrin.html" }
+  }
+}

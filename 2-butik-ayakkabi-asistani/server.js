@@ -1,5 +1,6 @@
 // Örnek Butik demo sunucusu — bağımlılıksız Node.  node server.js → http://localhost:5180
 // Asistan Ela: önce kod (router), sonra önbellek, en son model. Kısıtlar, kırılım, stok ve sepet her zaman kodla.
+const yedekFetch = require("../llm-yedek");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -101,7 +102,7 @@ const usage = { in: 0, out: 0 };
 async function openai(body, attempt = 0) {
   let r;
   try {
-    r = await fetch("https://api.openai.com/v1/responses", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + process.env.OPENAI_API_KEY },
+    r = await yedekFetch("https://api.openai.com/v1/responses", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + process.env.OPENAI_API_KEY },
       body: JSON.stringify({ model: MODEL, tools: TOOLS.filter((t) => t.name !== "ask_staff" || Staff.enabled()), reasoning: { effort: "low" }, ...body }) });
   } catch (e) { if (attempt < 3) { await new Promise((z) => setTimeout(z, 800 * 2 ** attempt)); return openai(body, attempt + 1); } throw e; }
   const j = await r.json();
