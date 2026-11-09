@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinik Paneli — Örnek Diş Kliniği</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  body{background:#f3ede8}
+  .p-ust{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 5vw;background:var(--murdum);color:var(--krem);flex-wrap:wrap}
+  .p-ust .logo{color:var(--krem)}
+  .p-ust small{color:var(--pudra);font-size:13px}
+  .p-ic{padding:36px 5vw 80px;max-width:1340px;margin:0 auto}
+  .p-ic h1{font-size:42px;margin-bottom:6px}
+  .p-ic > p{color:var(--soluk);margin-bottom:28px}
+  .kpi{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}
+  .kpi div{background:var(--beyaz);border-radius:18px;padding:22px}
+  .kpi span{font-size:12px;color:var(--soluk);text-transform:uppercase;letter-spacing:.12em}
+  .kpi b{display:block;font-family:var(--serif);font-size:44px;font-weight:500;line-height:1.1;margin-top:6px}
+  .kpi small{font-size:12px;color:#3f8f5d}
+  .iki{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+  .iki .kutu:first-child{grid-row:span 2}
+  .kutu{background:var(--beyaz);border-radius:18px;padding:24px}
+  .kutu h3{font-size:24px;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-weight:500;color:var(--soluk);padding:8px 6px;border-bottom:1px solid var(--krem2)}
+  td{padding:11px 6px;border-bottom:1px solid var(--krem2)}
+  .rozet{font-size:11px;padding:3px 9px;border-radius:999px;background:#e3f2e8;color:#2f7a4b;white-space:nowrap}
+  .rozet.gece{background:#ece4f3;color:#6a4d86}
+  .soru{font-size:13px;padding:10px 0;border-bottom:1px solid var(--krem2)}
+  .soru small{color:var(--soluk);display:block;font-size:11px}
+  .icgoru{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+  .icgoru p{font-size:13px;background:var(--krem);padding:12px 14px;border-radius:12px;border-left:3px solid var(--gul)}
+  .bos{color:var(--soluk);font-size:13px;padding:20px 0}
+  .tablo-kap{overflow-x:auto}
+  @media(max-width:900px){.kpi{grid-template-columns:1fr 1fr}.iki{grid-template-columns:1fr}.kpi b{font-size:34px}}
+  .karne{background:var(--murdum);color:var(--krem);border-radius:18px;padding:24px;margin-bottom:24px}
+  .karne-ust{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .karne h3{font-size:28px}
+  .karne p{color:var(--pudra);font-size:13px}
+  .karne label{font-size:12px;color:var(--pudra);display:flex;gap:8px;align-items:center}
+  .karne input{width:110px;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font:inherit}
+  .huni{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .huni div{background:rgba(255,255,255,.06);border-radius:14px;padding:14px}
+  .huni span{font-size:11px;color:var(--pudra);text-transform:uppercase;letter-spacing:.1em}
+  .huni b{display:block;font-family:var(--serif);font-size:32px;font-weight:500;line-height:1.15}
+  .huni small{font-size:11px;color:#bba9ae}
+  .huni .vurgu{background:var(--krem);color:var(--murdum)}
+  .huni .vurgu span,.huni .vurgu small{color:var(--gul2)}
+  @media(max-width:900px){.huni{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="p-ust">
+  <a class="logo" href="index.html"><span class="ay"></span>Örnek <i>Diş</i></a>
+  <small>Klinik yöneticisi görünümü · demo</small>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn acik kucuk" id="ornek">Örnek verilerle doldur</button>
+    <button class="btn kucuk" style="color:var(--pudra)" id="temizle">Sıfırla</button>
+    <a class="btn acik kucuk" href="yonetim.html">Resepsiyon</a>
+    <a class="btn acik kucuk" href="index.html">Siteye dön</a>
+  </div>
+</div>
+<main class="p-ic">
+  <h1>Ada bu hafta sizin için ne yaptı?</h1>
+  <p>Sitede Ada ile alınan randevular burada anında görünür. Gerçek kurulumda klinik yazılımınıza, Google Takvim'e ve WhatsApp Business'a bağlanır.</p>
+  <div class="kpi" id="kpi"></div>
+  <div class="karne" id="karne"></div>
+  <div class="iki">
+    <div class="kutu"><h3>Ada'dan gelen randevular</h3><div class="tablo-kap" id="tablo"></div></div>
+    <div class="kutu"><h3>Geri kazanım listesi</h3><p style="font-size:13px;color:var(--soluk);margin:-8px 0 10px">Bakım zamanı geçmiş, randevusu olmayan müşteriler. Tek tıkla kişisel mesaj.</p><div id="geri"></div></div>
+    <div class="kutu"><h3>Müşteriler ne soruyor?</h3><div id="sorular"></div><div class="icgoru" id="icgoru"></div></div>
+  </div>
+</main>
+<script type="module">
+import { kayit, kaydet, sifirla, ornekYukle, telSade, ARALIK } from './js/kayit.js';
+import { SALON, tl } from './js/veri.js';
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const gece = (t) => { const h = new Date(t).getHours(); return h >= 21 || h < 10; };
+
+function ciz() {
+  const k = kayit(), R = k.randevular;
+  const E = R.filter((r) => r.kaynak === 'Ada' && r.durum !== 'iptal');
+  const ciro = E.reduce((a, r) => a + r.tutar, 0);
+  const mesaiDisi = E.filter((r) => gece(r.olusturma)).length;
+  const donusum = k.sohbetler ? Math.round((E.length / k.sohbetler) * 100) : 0;
+  $('#kpi').innerHTML = `
+    <div><span>Ada'nın aldığı randevu</span><b>${E.length}</b><small>Telefona hiç dokunmadan</small></div>
+    <div><span>Beklenen ciro</span><b>${tl(ciro)}</b><small>Ada kaynaklı</small></div>
+    <div><span>Mesai dışı</span><b>${mesaiDisi}</b><small>Klinik kapalıyken alınan randevu</small></div>
+    <div><span>Gelmeme oranı</span><b>%${(() => { const g = R.filter((r) => ['geldi', 'gelmedi'].includes(r.durum)); return g.length ? Math.round(g.filter((r) => r.durum === 'gelmedi').length / g.length * 100) : 0; })()}</b><small>Sektörde hatırlatmasız ~%20</small></div>
+    <div><span>Sohbet → randevu</span><b>%${donusum}</b><small>${k.sohbetler} sohbet · ${k.analizler} şikayet testi</small></div>`;
+  $('#tablo').innerHTML = R.length ? `<table><tr><th>Müşteri</th><th>Hizmet</th><th>Tarih</th><th>Tutar</th><th>Kaynak</th><th>Hatırlatma</th></tr>
+    ${E.map((r) => `<tr><td><b>${esc(r.ad)}</b><br><small style="color:var(--soluk)">${esc(r.tel)}</small></td><td>${esc(r.hizmet)}</td><td>${r.tarih.split('-').reverse().join('.')} ${r.saat}</td><td>${tl(r.tutar)}</td><td>${r.kanal === 'Meta reklam' ? '<span class="rozet gece">Meta reklam</span>' : '<small style="color:var(--soluk)">organik</small>'}</td>
+      <td>${r.wa ? '<span class="rozet">WhatsApp ✓</span>' : '—'} ${gece(r.olusturma) ? '<span class="rozet gece">gece alındı</span>' : ''}</td></tr>`).join('')}</table>`
+    : `<p class="bos">Henüz randevu yok. Siteye dönüp Ada ile bir randevu oluşturun ya da “Örnek verilerle doldur”a basın.</p>`;
+  $('#sorular').innerHTML = k.sorular.slice(0, 7).map((s) => `<div class="soru">${esc(s.metin)}<small>${new Date(s.t).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</small></div>`).join('') || '<p class="bos">Soru yok.</p>';
+  // Reklam karnesi: Meta'daki tıklama/beğeni değil, kasaya giren para
+  const M = R.filter((r) => r.kanal === 'Meta reklam' && r.durum !== 'iptal');
+  const gelen = M.filter((r) => r.durum === 'geldi');
+  const harcama = k.reklam?.harcama || 0;
+  const mCiro = M.filter((r) => r.durum !== 'gelmedi').reduce((a, r) => a + r.tutar, 0);
+  const yeniMusteri = new Set(M.map((r) => telSade(r.tel))).size;
+  $('#karne').innerHTML = `<div class="karne-ust"><div><h3>Reklam karnesi · Meta</h3><p>Beğeni ya da tıklama değil: reklamdan gelip randevu alan ve kliniğe gelen gerçek hastalar.</p></div>
+    <label>Meta harcaması (TL) <input id="harcama" inputmode="numeric" value="${harcama}"></label></div>
+    <div class="huni">
+      <div><span>Harcama</span><b>${tl(harcama)}</b><small>${k.reklam?.donem || 'Bu dönem'}</small></div>
+      <div><span>Reklamdan randevu</span><b>${M.length}</b><small>${yeniMusteri} farklı müşteri</small></div>
+      <div><span>Kliniğe gelen</span><b>${gelen.length}</b><small>"Geldi" işaretlenen</small></div>
+      <div class="vurgu"><span>Randevu başı maliyet</span><b>${M.length ? tl(Math.round(harcama / M.length)) : '—'}</b><small>Hedefle karşılaştırın</small></div>
+      <div class="vurgu"><span>Reklamdan ciro</span><b>${tl(mCiro)}</b><small>${harcama ? `Her 1 TL reklam → ${(mCiro / harcama).toFixed(1).replace('.', ',')} TL` : ''}</small></div>
+    </div>`;
+  $('#harcama').onchange = (e) => { kaydet((k) => { k.reklam = { ...(k.reklam || {}), harcama: Number(e.target.value.replace(/\D/g, '')) || 0 }; }); ciz(); };
+
+  const bugun = new Date().toISOString().slice(0, 10);
+  const son = {};
+  R.filter((r) => r.durum === 'geldi').forEach((r) => { const t = telSade(r.tel); if (!son[t] || son[t].tarih < r.tarih) son[t] = r; });
+  const geri = Object.values(son).filter((r) => {
+    const gun = (Date.now() - new Date(r.tarih + 'T12:00:00')) / 864e5;
+    return gun > (ARALIK[r.hid] || 30) + 7 && !R.some((x) => telSade(x.tel) === telSade(r.tel) && x.tarih >= bugun && x.durum === 'onayli');
+  });
+  $('#geri').innerHTML = geri.map((r) => {
+    const gun = Math.round((Date.now() - new Date(r.tarih + 'T12:00:00')) / 864e5);
+    const msj = `Merhaba ${r.ad.split(' ')[0]}, ${SALON.ad}'dan Selin. Son ${r.hizmet} bakımınızın üzerinden ${gun} gün geçti; bu hafta size özel %10 ile bir saat ayıralım mı?`;
+    const d = r.tel.replace(/\D/g, '').replace(/^0/, '90');
+    return `<div class="soru" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span><b>${esc(r.ad)}</b><small>${esc(r.hizmet)} · ${gun} gün önce</small></span><a class="rozet" target="_blank" rel="noopener" href="https://wa.me/${d}?text=${encodeURIComponent(msj)}">WhatsApp</a></div>`;
+  }).join('') || '<p class="bos">Herkes zamanında geliyor.</p>';
+  const say = {};
+  R.forEach((r) => (say[r.hizmet] = (say[r.hizmet] || 0) + 1));
+  const enCok = Object.entries(say).sort((a, b) => b[1] - a[1])[0];
+  $('#icgoru').innerHTML = [
+    enCok && `<p><b>${enCok[0]}</b> en çok talep gören hizmet. Hafta içi 14:00–16:00 boşluklarına bu hizmet için “son dakika %10” açmayı önerebilirim.</p>`,
+    mesaiDisi && `<p>Randevuların ${mesaiDisi} tanesi klinik kapalıyken geldi. Bunlar normalde kaçan hastalardı.</p>`,
+    R.length && `<p>${R.filter((r) => r.wa).length} müşteri WhatsApp iznini verdi. 6 hafta sonra “bakım zamanı” hatırlatmasıyla geri çağırabilirim.</p>`,
+  ].filter(Boolean).join('');
+}
+
+$('#ornek').onclick = () => { ornekYukle(); ciz(); };
+$('#temizle').onclick = () => { sifirla(); ciz(); };
+ciz();
+</script>
+</body>
+</html>
