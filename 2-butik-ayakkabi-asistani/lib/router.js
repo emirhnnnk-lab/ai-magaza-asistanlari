@@ -187,11 +187,14 @@ function create() {
       // ekip açıkken ticari/bilinmeyen sorular modele gider, model ekibe sorar (toptan, indirim, fatura, sipariş…)
       if (Staff.enabled() && /toptan|kurumsal|fatura|indirim|kupon|kampanya|siparis(im|imi| no| numara)|kargom|nerede kaldi|gelmedi|ozel uretim|\b4[2-4] ?numara|magazada (var|stok)|rezerv|ayirt|hediye paket|yurt ?disi/.test(m)) return null;
       if (/siparis(im|imi| no| numara)|kargom|takip|nerede kaldi|gelmedi/.test(m)) return reply(`Siparişinizi hesabınızda Siparişlerim'den takip edebilirsiniz. Bir terslik varsa sipariş numaranızla WhatsApp'tan (${FACTS.whatsapp}) yazın, ekibimiz hemen ilgilensin.`);
-      if (/kapida/.test(m)) return reply("Var, kapıda nakit ödeyebilirsiniz. Yalnız kapıda kart geçmiyor; kartla ödemek isterseniz sitede yapmanız gerekiyor.");
-      if (/taksit|odeme|havale|eft|kredi kart/.test(m)) return reply(FACTS.odeme);
-      if (/kargo|ne zaman gelir|kac gunde|teslimat|gonderim/.test(m)) return reply(FACTS.kargo);
-      if (/magaza|adres|nerede(siniz)?|subeniz|trabzon|gelip deneyebilir|yerinde deneme/.test(m)) return reply(`${FACTS.magaza}. Gelirseniz numarasını da rengini de deneyerek seçersiniz, bekleriz.`);
-      if (/whatsapp|telefon|iletisim|ulasabilirim|musteri hizmet|yetkili|calisma saat|kacta (aciliyor|kapaniyor)/.test(m)) return reply(`En hızlısı WhatsApp: ${FACTS.whatsapp}. Telefonla da ${FACTS.telefon} numarasından ulaşabilirsiniz; ${FACTS.saat}.`);
+      // Tek mesajda birden çok bilgi sorusu olabilir ("kapıda ödeme var mı, şubeniz var mı?"): hepsini topla, ilkinde durma.
+      const parts = [];
+      if (/kapida/.test(m)) parts.push("Kapıda nakit ödeyebilirsiniz. Yalnız kapıda kart geçmiyor; kartla ödemek isterseniz sitede yapmanız gerekiyor.");
+      else if (/taksit|odeme|havale|eft|kredi kart/.test(m)) parts.push(FACTS.odeme);
+      if (/kargo|ne zaman gelir|kac gunde|teslimat|gonderim/.test(m)) parts.push(FACTS.kargo);
+      if (/magaza|adres|nerede(siniz)?|sube|trabzon|gelip deneyebilir|yerinde deneme/.test(m)) parts.push(`${FACTS.magaza}. Gelirseniz numarasını da rengini de deneyerek seçersiniz, bekleriz.`);
+      if (/whatsapp|telefon|iletisim|ulasabilirim|musteri hizmet|yetkili|calisma saat|kacta (aciliyor|kapaniyor)/.test(m)) parts.push(`En hızlısı WhatsApp: ${FACTS.whatsapp}. Telefonla da ${FACTS.telefon} numarasından ulaşabilirsiniz; ${FACTS.saat}.`);
+      if (parts.length) return reply((/kapida/.test(m) ? "Var. " : "") + parts.join(" "));
     }
     // karşılaştırma, kombin, tavsiye, kararsızlık, pazarlık → model
     return null;

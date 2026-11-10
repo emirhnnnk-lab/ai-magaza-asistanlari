@@ -1,5 +1,5 @@
 // Site sunucusunu Vercel fonksiyonuna sarar; HTML sayfalara "← Vitrin" düğmesi ekler.
-const BTN = '<a href="/vitrin" style="position:fixed;left:10px;bottom:10px;z-index:2147483647;background:#111;color:#fff;font:600 13px system-ui;padding:9px 13px;border-radius:20px;text-decoration:none;opacity:.85">← Vitrin</a>';
+const BTN = '<a href="/vitrin" style="position:fixed;left:0;top:42%;z-index:2147483647;background:#111;color:#fff;font:600 12px system-ui;padding:8px 10px 8px 8px;border-radius:0 14px 14px 0;text-decoration:none;opacity:.8">← Vitrin</a>';
 module.exports = (server) => (req, res) => {
   let tur = ""; const wh = res.writeHead.bind(res);
   res.writeHead = (code, ...a) => { const h = a.find((x) => x && typeof x === "object"); if (h) { tur = String(h["Content-Type"] || h["content-type"] || ""); if (tur.includes("text/html")) { delete h["Content-Length"]; delete h["content-length"]; } } return wh(code, ...a); };
