@@ -47,7 +47,7 @@ em{font-style:italic;color:var(--gul2)}
 .guven b{font-family:var(--serif);font-size:32px;font-weight:500;display:block;line-height:1}
 .guven span{font-size:12px;color:var(--soluk)}
 
-.hero-sag{position:relative;height:560px}
+.hero-sag{position:relative;height:560px;align-self:start;margin-top:20px} /* üstte hizalı: alt kart sabit sohbet düğmesinin altında kalmasın */
 .orb{position:absolute;inset:30px 20px 30px 40px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff 0%,var(--pudra) 40%,var(--gul) 85%);box-shadow:inset -40px -40px 80px rgba(18,58,68,.22),0 60px 100px -40px rgba(156,108,88,.6);animation:sal 9s ease-in-out infinite}
 .orb-ic{position:absolute;inset:18%;border-radius:50%;border:1px solid rgba(255,255,255,.6)}
 @keyframes sal{50%{transform:translateY(-14px)}}

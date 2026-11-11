@@ -13,6 +13,7 @@ export const MAGAZA = {
     gravur: 'Yüzük ve bilekliklerin iç yüzeyine isim, tarih ya da kısa bir not ücretsiz işliyoruz; en fazla 20 karakter. Gravürlü siparişler 1 iş günü gecikmeli çıkar.',
     olcu: 'Yüzük ölçüsünü ilk seferde ücretsiz büyütüp küçültüyoruz. Ölçünüzü bilmiyorsanız size ücretsiz bir ölçü halkası gönderebiliriz.',
     bakim: 'Ömür boyu ücretsiz temizlik ve parlatma hizmetimiz var; parçanızı kargoyla gönderin, biz yenileyip geri yollayalım.',
+    saat: 'Çalışma saatlerimiz: Hafta içi 10.00-19.00, Cumartesi 10.00-18.00, Pazar kapalı.',
     kutu: 'Her parça Örnek Kuyum imzalı, kadife iç kaplamalı hediye kutusunda; pırlantalı ürünler sertifikasıyla birlikte teslim edilir.',
   },
 };

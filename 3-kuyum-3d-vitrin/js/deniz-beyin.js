@@ -68,6 +68,7 @@ const N = {
   taksit: ['taksit', 'odeme', 'kredi kart', 'havale', 'eft', 'nakit', 'pesin'],
   kutu: ['kutu', 'paket', 'hediye paketi', 'ambalaj'],
   dene: ['artirilmis', 'denemek', 'deneyebilir', 'parmakta', 'elimde', 'uzerimde', 'sanal deneme'],
+  calisma: ['calisma saat', 'calisma gun', 'mesai', 'kacta acil', 'kacta kapan', 'acik mi', 'kapali mi', 'saatleriniz', 'acilis'],
   magaza: ['magaza', 'adres', 'nerede', 'telefon', 'iletisim', 'sube', 'randevu', 'ziyaret'],
   satinal: ['almak istiyorum', 'satin al', 'siparis', 'sepete', 'alayim', 'aliyorum', 'karar verdim', 'bunu istiyorum', 'nasil alirim'],
   indirim: ['indirim', 'pazarlik', 'son fiyat', 'ucuzlat', 'kampanya', 'firsat', 'kupon'],
@@ -279,6 +280,7 @@ export class DenizBeyin {
     if (has(t, N.iade)) hizmet.push(H.iade);
     if (has(t, N.kargo)) hizmet.push(H.kargo);
     if (has(t, N.taksit)) hizmet.push(H.taksit);
+    if (has(t, N.calisma)) hizmet.push(H.saat);
     if (has(t, N.kutu)) hizmet.push(H.kutu);
     if (has(t, N.dene)) hizmet.push('Sitemizde sanal deneme yok efendim; parçalarımızı mağazamızda dilediğiniz kadar deneyebilirsiniz. Burada her açıdan inceleyip tüm detayları benimle konuşabilirsiniz.');
     if (hizmet.length && !has(t, [...N.fiyat, ...N.tas, ...N.oner])) {
