@@ -395,7 +395,7 @@ function makeStage(el, dark){
   scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), .04).texture;
   const cam = new THREE.PerspectiveCamera(32, 1, .01, 100); cam.position.set(4.2, 1.8, 5.4);
   const key = new THREE.DirectionalLight(dark ? 0xffe2bd : 0xfff4e6, dark ? 2.4 : 1.6); key.position.set(3,5,2); key.castShadow = true; key.shadow.mapSize.set(1024,1024); key.shadow.radius = 6; scene.add(key);
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 64), new THREE.ShadowMaterial({opacity: dark ? .5 : .18}));
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(9, 64), new THREE.ShadowMaterial({opacity: dark ? .5 : .18}));
   ground.rotation.x = -Math.PI/2; ground.position.y = -1.1; ground.receiveShadow = true; scene.add(ground);
   const ctl = new OrbitControls(cam, r.domElement);
   ctl.enableDamping = true; ctl.enablePan = false; ctl.minDistance = 2.2; ctl.maxDistance = 8; ctl.autoRotate = true; ctl.autoRotateSpeed = 1.2; ctl.target.set(0,-.1,0);

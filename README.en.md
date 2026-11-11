@@ -4,6 +4,8 @@
 
 In a small shop, most sales happen through conversation: "do you have this dress in M?", "I'm 1.65 m, which size should I get?", "how do I take care of this necklace?". I built assistant-powered sites that can answer these questions even at midnight, show the product and add it to the cart. Each one was made for a real business. In this repo I changed the brand names (Örnek Moda, Örnek Butik, Örnek Kuyum, Örnek Güzellik), addresses and contact details.
 
+![3D jewelry showcase with the AI advisor Deniz](docs/ekran-1.png) ![Sample boutique shoe site with the style advisor Ela](docs/ekran-2.png)
+
 **Live:** [3D jewelry showcase](https://emirhnnnk-lab.github.io/ai-magaza-asistanlari/3-kuyum-3d-vitrin/)
 
 | # | Project | Sector | What the assistant does |

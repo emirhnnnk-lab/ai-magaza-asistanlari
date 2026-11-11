@@ -4,6 +4,8 @@
 
 Küçük bir mağazada satışın çoğu sohbetle oluyor: "bu elbisenin M bedeni var mı?", "boyum 1,65, hangi bedeni alayım?", "bu kolyenin bakımı nasıl yapılır?". Bu soruları gece yarısı da cevaplayabilen, ürünü gösterip sepete ekleyebilen asistanlı siteler yaptım. Her biri gerçek bir işletme için hazırlandı. Bu repoda marka adlarını (Örnek Moda, Örnek Butik, Örnek Kuyum, Örnek Güzellik), adresleri ve iletişim bilgilerini değiştirdim.
 
+![3D kuyum vitrini ve yapay zeka danışmanı Deniz](docs/ekran-1.png) ![Örnek Butik ayakkabı sitesi ve stil danışmanı Ela](docs/ekran-2.png)
+
 **Canlı:** [3D kuyum vitrini](https://emirhnnnk-lab.github.io/ai-magaza-asistanlari/3-kuyum-3d-vitrin/)
 
 | # | Proje | Sektör | Asistan ne yapıyor |
