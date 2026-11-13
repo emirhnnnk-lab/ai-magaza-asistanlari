@@ -7,8 +7,8 @@ const K = require("./catalog");
 const Staff = require("./staff");
 
 const FACTS = {
-  whatsapp: "0500 000 00 00",
-  telefon: "0850 000 00 00",
+  whatsapp: "0500 000 00 00 (demo)",
+  telefon: "0850 000 00 00 (demo)",
   saat: "hafta içi 10.00–18.00, Cumartesi 09.00–15.00 arası; Pazar kapalıyız", // TEYİT: Mağazalarımız sayfası "her gün 10–20" diyor
   magaza: "Trabzon'da, Meydan'dayız: Gazipaşa Mahallesi, Zeytinlik Caddesi No:5, Ortahisar. Her gün 08.30–21.00 arası açığız, telefonumuz 0 462 600 01 01",
   iade: "İçiniz rahat olsun, teslimden sonra 14 gün içinde iade edebilirsiniz. Ayakkabıyı evde deneyip giymeden, etiketi ve kutusuyla geri göndermeniz yeterli: Siparişlerim'den iade talebini açıp DHL'e 770 803 832 koduyla teslim ediyorsunuz. Kartla ödediyseniz 5–10, havaleyle ödediyseniz 1–3 iş gününde geri yatar.",

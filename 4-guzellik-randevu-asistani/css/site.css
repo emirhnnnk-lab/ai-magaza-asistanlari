@@ -32,6 +32,9 @@ em{font-style:italic;color:var(--gul2)}
 .nav nav a:hover{color:var(--gul2)}
 .nav-sag{display:flex;align-items:center;gap:18px}
 .panel-link{font-size:13px;color:var(--soluk);border-bottom:1px dashed var(--soluk)}
+/* Randevu düğmesi iki satıra kırılıp sağdan taşmasın: düğme küçülmez, dar masaüstünde menü sıkışır ve panel bağlantıları gizlenir */
+.nav .btn{white-space:nowrap;flex-shrink:0}
+@media (max-width:1240px){.nav nav{gap:20px}.panel-link{display:none}}
 
 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding:80px 5vw 70px;align-items:center;min-height:calc(100vh - 110px)}
 .hero h1{font-size:clamp(46px,6.4vw,92px);margin-bottom:24px}

@@ -108,7 +108,7 @@
           if (!el.classList.contains("open")) document.getElementById("elaFab").classList.add("ping");
         }
         save();
-        if (!W.got && !W.warned && Date.now() - W.started > 180000) { W.warned = true; bubble("bot", `Ekibimiz şu an biraz yoğun; cevap gelince burada göreceksiniz. Beklemek istemezseniz WhatsApp'tan da yazabilirsiniz: 0500 000 00 00.`); }
+        if (!W.got && !W.warned && Date.now() - W.started > 180000) { W.warned = true; bubble("bot", `Ekibimiz şu an biraz yoğun; cevap gelince burada göreceksiniz. Beklemek istemezseniz WhatsApp'tan da yazabilirsiniz: 0500 000 00 00 (demo).`); }
         W.timer = j.mode === "insan" || Date.now() - W.started < 600000 ? setTimeout(tick, 2500) : null;
       } catch { W.timer = setTimeout(tick, 5000); }
     };
