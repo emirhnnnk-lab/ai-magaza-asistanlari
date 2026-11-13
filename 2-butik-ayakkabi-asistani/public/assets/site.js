@@ -27,7 +27,7 @@
   <div class="foot">
     <div><a href="/" class="logo"><b>Örnek Butik</b><small>Maison de chaussures</small></a><p>Türkiye'de üretilen, çoğu hakiki deriden kadın ayakkabıları.</p></div>
     <div><h5>Koleksiyon</h5><ul><li><a href="/koleksiyon?tur=bot">Bot</a></li><li><a href="/koleksiyon?tur=cizme">Çizme</a></li><li><a href="/koleksiyon?tur=stiletto">Stiletto</a></li><li><a href="/koleksiyon?tur=topuklu">Topuklu</a></li><li><a href="/koleksiyon?tur=makosen">Makosen</a></li><li><a href="/koleksiyon?tur=babet">Babet</a></li></ul></div>
-    <div><h5>Mağaza</h5><ul><li>Trabzon Meydan Şubesi</li><li>Gazipaşa Mah. Zeytinlik Cad. No:5<br>Ortahisar / Trabzon</li><li>Her gün 08.30 – 21.00</li></ul></div>
+    <div><h5>Mağaza</h5><ul><li>Örnek Şube</li><li>Örnek Mah. Örnek Cad. No: 1 (demo)<br>Örnek / Trabzon</li><li>Her gün 10.00 – 20.00</li></ul></div>
     <div><h5>Bize ulaşın</h5><ul><li>WhatsApp 0500 000 00 00 (demo)</li><li>Müşteri hizmetleri 0850 000 00 00 (demo)</li><li><a href="https://instagram.com/ornekmarka" target="_blank" rel="noopener">Instagram @ornekbutik</a></li></ul></div>
   </div>
   <div class="legal"><span>© 2026 Örnek Butik</span><span>İade ve Değişim · Ödeme ve Taksit · Gizlilik</span></div>
